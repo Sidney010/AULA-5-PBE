@@ -1,5 +1,5 @@
 /*********************************************************************************************************************
- * Objetivo: Arquivo responsávelpela realização do CRUDde filme no Banco de Dados MySQL
+ * Objetivo: Arquivo responsável pela realização do CRUDde filme no Banco de Dados MySQL
  * Data: 01/10/2025
  * Autor: Sidney
  * Versão: 1.0
@@ -20,6 +20,12 @@
  * Instalação do Prisma
  * npm install prisma --save                -> Realiza a conexão com o BD
  * npm install @prisma/client -- save       -> Permite executar scripts SQL no BD
+ * npx prisma init                          -> Incializar o prisma no projeto (.env, prisma, etc)
+ * npx prisma migrate dev                   -> PERmite sincronizar o Prisma com o BD, MOdellar o BD
+ *                                             conforme as configurações do ORM
+ *                                             CUIDADO: Esse comando faz um reset no BD 
+ * npx prisma migrate reset                 -> Realiza o reset do database
+ * npx prisma generate                      -> Realiza apenas o sincronismo com BD
  
  
     $queryRawUnsafe()     -> Permite executar apenas sripts SQL que retornam
@@ -36,10 +42,12 @@
     $executeRaw()         -> Permite executar scripts SQL que NÃO retornam dados 
         do BD (INSERT, UPDATE, DELETE)
         Permite também aplicar seguranção contra SQL Inhection
- */
+        
+*/
 
 //Import da biblioteca do PrismaClient
-const { PrismaClient } = require('@prisma/client')
+// const { PrismaClient } = require('@prisma/client')
+const { PrismaClient } = require('../../generated/prisma')
 
 //Cria um objeto do prisma client para manipular os scripts SQL
 const prisma = new PrismaClient()
@@ -56,7 +64,7 @@ const getSelectAllFilms = async function () {
 
 
         //Script SQL
-        let sql = `select * from tbl_filme order by id desc`
+        let sql = `select * from tbl_filmes order by filme_id desc;`
 
         //Executa no BD o script SQL
         let result = await prisma.$queryRawUnsafe(sql)
