@@ -28,9 +28,23 @@ app.use((request, response, next)=>{
 const controllerFilme = require('./controller/filme/controller_filme.js')
 
 //Endpoint para CRUD de Filmes
+    //Retorna ums lista de filmes
 app.get('/v1/locadora/filme', cors(), async function (request, response){
     //Chama a função da controller para retornar todos os filmes
     let filme = await controllerFilme.listarFilmes()
+
+    response.status(filme.status_code)
+    response.json(filme)
+
+})
+
+    //Retorna um filme filtrando pelo ID
+app.get('/v1/locadora/filme/:id', cors(), async function (request, response){
+
+    let idFilme = request.params.id
+    
+    //Chama a função da controller para retornar todos os filmes
+    let filme = await controllerFilme.buscarFilmeId(idFilme)
 
     response.status(filme.status_code)
     response.json(filme)

@@ -1,5 +1,5 @@
 /*********************************************************************************************************************
- * Objetivo: Arquivo responsável pela realização do CRUDde filme no Banco de Dados MySQL
+ * Objetivo: Arquivo responsável pela realização do CRUD de filme no Banco de Dados MySQL
  * Data: 01/10/2025
  * Autor: Sidney
  * Versão: 1.0
@@ -64,12 +64,13 @@ const getSelectAllFilms = async function () {
 
 
         //Script SQL
-        let sql = `select * from tbl_filmes order by filme_id desc;`
+        let sql = `select * from tbl_filme order by filme_id desc;`
 
         //Executa no BD o script SQL
         let result = await prisma.$queryRawUnsafe(sql)
 
-        if (result.length > 0)
+        //Validação para identificar se o retorno do BD é uma ARRAY (vazio ou com dados)
+        if (Array.isArray(result))
             return result
         else
             return false
@@ -84,6 +85,32 @@ const getSelectAllFilms = async function () {
 
 //Retorna um filme filtrando pelo ID do banco de dados
 const getSelectByIdFilms = async function (id) {
+    
+    try {
+
+        /* Select conforme a ordem dos itens
+        *   order by id asc     -> ordem cresecente (ascendente)
+        *   order by id desc    -> ordem descrescente   
+        */
+
+
+        //Script SQL
+        let sql = `select * from tbl_filme where filme_id=${id};`
+
+        //Executa no BD o script SQL
+        let result = await prisma.$queryRawUnsafe(sql)
+
+        //Validação para identificar se o retorno do BD é uma ARRAY (vazio ou com dados)
+        if (Array.isArray(result))
+            return result
+        else
+            return false
+
+    } catch (error) {
+        // console.log(error)
+        return false
+
+    }
 
 }
 
@@ -103,5 +130,6 @@ const setDeleteFilms = async function (id) {
 }
 
 module.exports = {
-    getSelectAllFilms
+    getSelectAllFilms,
+    getSelectByIdFilms
 }
