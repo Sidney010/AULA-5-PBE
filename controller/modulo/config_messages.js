@@ -39,7 +39,12 @@ const ERROR_INTERNAL_SERVER_CONTROLLER = {
 const ERROR_REQUIRED_FIELDS = {
     status: false,
     status_code: 400,
-    message: 'Não foi possível processar a requisição, devido a campos obrigatórios que não foram enviados corretamente, conforme a documentação da API'
+    message: 'Não foi possível processar a requisição, devido a campos obrigatórios que não foram enviados corretamente, conforme a documentação da API !!!'
+}
+const ERROR_CONTENT_TYPE = {
+    status: false,
+    status_code: 415,
+    message: 'Não foi possível processar a requisição, pois o tipo de conteúdo enviado no body não é permitido. Deve-se utilizar apenas JSON na API !!!'
 }
 
 /***************************************** MENSAGENS DE SUCESSO DO PROJETO ************************************ */
@@ -48,12 +53,19 @@ const SUCESS_REQUEST = {
     status_code: 200,
     message: 'Requesição bem sucedida!!!',
 }
+const SUCESS_CREATED_ITEM = {
+    status: true,
+    status_code: 201,
+    message: 'Requesição bem sucedida, objeto criado com sucesso!!!',
+}
 
 module.exports = {
     HEADER,
     SUCESS_REQUEST,
+    SUCESS_CREATED_ITEM,
     ERROR_NOT_FOUND,
     ERROR_INTERNAL_SERVER_CONTROLLER,
     ERROR_INTERNAL_SERVER_MODEL,
-    ERROR_REQUIRED_FIELDS
+    ERROR_REQUIRED_FIELDS,
+    ERROR_CONTENT_TYPE
 }
