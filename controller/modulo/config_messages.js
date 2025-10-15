@@ -56,13 +56,25 @@ const SUCESS_REQUEST = {
 const SUCESS_CREATED_ITEM = {
     status: true,
     status_code: 201,
-    message: 'Requesição bem sucedida, objeto criado com sucesso!!!',
+    message: 'Requesição bem sucedida, objeto CRIADO com sucesso!!!',
+}
+const SUCESS_UPDATED_ITEM = {
+    status: true,
+    status_code: 200,
+    message: 'Requesição bem sucedida, objeto ATUALIZADO com sucesso!!!',
+}
+const SUCESS_DELETED_ITEM = {
+    status: true,
+    status_code: 200,
+    message: 'Requesição bem sucedida, objeto APAGADO com sucesso!!!',
 }
 
 module.exports = {
     HEADER,
     SUCESS_REQUEST,
     SUCESS_CREATED_ITEM,
+    SUCESS_UPDATED_ITEM,
+    SUCESS_DELETED_ITEM,
     ERROR_NOT_FOUND,
     ERROR_INTERNAL_SERVER_CONTROLLER,
     ERROR_INTERNAL_SERVER_MODEL,

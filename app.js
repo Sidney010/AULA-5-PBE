@@ -6,23 +6,23 @@
  *********************************************************************************************************************************/
 
 // Import das dependências
-const express       = require('express')
-const cors          = require('cors')
-const bodyParser    = require('body-parser')
+const express = require('express')
+const cors = require('cors')
+const bodyParser = require('body-parser')
 
 //Cria um obejto especilista no formato JSON para receber os dados do body (POST e PUT)
 const bodyParserJSON = bodyParser.json()
 
 //Porta
-const PORT          = process.PORT || 8080
+const PORT = process.PORT || 8080
 
 // Instância na class do express
 const app = express()
 
 // Configurações do CORS
-app.use((request, response, next)=>{
-    response.header('Access-Control-Allow-Origin','*')      // IP de origem
-    response.header('Access-Control-Allow-Methods','GET, POST, PUT, DELETE, OPTIONS')   // Metodos (Verbos) do protocolo HTTP
+app.use((request, response, next) => {
+    response.header('Access-Control-Allow-Origin', '*')      // IP de origem
+    response.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')   // Metodos (Verbos) do protocolo HTTP
 
     app.use(cors())
     next()                                                  //Próximo, ler tudo
@@ -31,8 +31,8 @@ app.use((request, response, next)=>{
 const controllerFilme = require('./controller/filme/controller_filme.js')
 
 //Endpoint para CRUD de Filmes
-    //Retorna ums lista de filmes
-app.get('/v1/locadora/filmes', cors(), async function (request, response){
+//Retorna ums lista de filmes
+app.get('/v1/locadora/filmes', cors(), async function (request, response) {
     //Chama a função da controller para retornar todos os filmes
     let filme = await controllerFilme.listarFilmes()
 
@@ -41,11 +41,11 @@ app.get('/v1/locadora/filmes', cors(), async function (request, response){
 
 })
 
-    //Retorna um filme filtrando pelo ID
-app.get('/v1/locadora/filme/:id', cors(), async function (request, response){
+//Retorna um filme filtrando pelo ID
+app.get('/v1/locadora/filme/:id', cors(), async function (request, response) {
 
     let idFilme = request.params.id
-    
+
     //Chama a função da controller para retornar todos os filmes
     let filme = await controllerFilme.buscarFilmeId(idFilme)
 
@@ -56,7 +56,7 @@ app.get('/v1/locadora/filme/:id', cors(), async function (request, response){
 
     //Insere um novo filme no BD
 app.post('/v1/locadora/filme', cors(), bodyParserJSON, async function (request, response) {
-    //Recebe o objeto JSON pelo o body da reuisição
+    //Recebe o objeto JSON pelo o body da requisição
     let dadosBody = request.body
 
     //Recebe o content tye da requisição
@@ -69,6 +69,42 @@ app.post('/v1/locadora/filme', cors(), bodyParserJSON, async function (request, 
     response.json(filme)
 })
 
-app.listen(PORT, function(){
+    //Atualiza um filme no BD
+app.put('/v1/locadora/filme/:id', cors(), bodyParserJSON, async function (request, response) {
+
+    //Recebe os dados do body
+    let dadosBody = request.body
+    
+    //Receba o id do filme encaminahdo pela URL
+    let idFilme = request.params.id
+
+    //Recebe o content tye da requisição
+    let contentType = request.headers['content-type']
+
+    //Chama a função da controller para dados o filme, enviamos os dados do body e parametros e o content-type
+    let filme = await controllerFilme.atualizarFilme(dadosBody, idFilme, contentType)
+
+    response.status(filme.status_code)
+    response.json(filme)
+
+
+
+})
+
+    //Deleta um filme no BD
+app.delete('/v1/locadora/filme/:id', cors(), async function (request, response) {
+   
+    //Receba o id do filme encaminahdo pela URL
+    let idFilme = request.params.id
+
+    //Chama a função da controller para dados o filme, enviamos os dados do body e parametros e o content-type
+    let filme = await controllerFilme.excluirFilme(idFilme)
+
+    response.status(filme.status_code)
+    response.json(filme)
+
+})
+
+app.listen(PORT, function () {
     console.log('API aguardando requisições !!!')
 })
