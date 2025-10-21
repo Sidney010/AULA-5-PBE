@@ -83,6 +83,33 @@ const getSelectAllFilms = async function () {
 
 }
 
+const getSelectLastIdFilm = async function () {
+    try {
+
+        /* Select conforme a ordem dos itens
+        *   order by id asc     -> ordem cresecente (ascendente)
+        *   order by id desc    -> ordem descrescente   
+        */
+
+
+        //Script SQL
+        let sql = `select filme_id from tbl_filme order by filme_id desc limit 1;`
+
+        //Executa no BD o script SQL
+        let result = await prisma.$queryRawUnsafe(sql)
+
+        //Validação para identificar se o retorno do BD é uma ARRAY (vazio ou com dados)
+        if (Array.isArray(result))
+            return Number(result[0].filme_id)
+        else
+            return false
+
+    } catch (error) {
+        // console.log(error)
+        return false
+
+    }
+}
 //Retorna um filme filtrando pelo ID do banco de dados
 const getSelectByIdFilms = async function (id) {
     
@@ -192,6 +219,7 @@ const setDeleteFilms = async function (id) {
 module.exports = {
     getSelectAllFilms,
     getSelectByIdFilms,
+    getSelectLastIdFilm,
     setInsertFilms,
     setUpdateFilms,
     setDeleteFilms
