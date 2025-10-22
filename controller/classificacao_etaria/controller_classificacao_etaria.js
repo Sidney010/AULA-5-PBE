@@ -1,5 +1,5 @@
 /*********************************************************************************************************************
- * Objetivo: Arquivo responsável pela manipulação de dados entre o APP e a Model do filme 
+ * Objetivo: Arquivo responsável pela manipulação de dados entre o APP e a Model da classifcação Etária
  *               (Validações, tratamento de dados, tratamento de erros, etc)
  * Data: 07/10/2025
  * Autor: Sidney
@@ -7,27 +7,27 @@
  *********************************************************************************************************************/
 
 //Import do arquivo DAO para manipular o CRUD no BD
-const filmeDAO = require('../../model/DAO/filme.js')
+const classificacaoEtariaDAO = require('../../model/DAO/classificacao_etaria.js')
 
 //Import do arquivo que padroniza todas as mensagens
 const MESSAGE_DEFAULT = require('../modulo/config_messages.js')
 
-//Retorna uma lista de filmes
-const listarFilmes = async function () {
+//Retorna a lista das classificaçãoes etarias
+const listarClassificacoesEtarias = async function () {
 
     //Realizanodo uma cópia do objeto MESSAGE_DEFAULT, permitindo que as alterações desta função
     //não interfiram em outras funções
     let MESSAGE = JSON.parse(JSON.stringify(MESSAGE_DEFAULT))
 
     try {
-        //Chama a função do DAO para retorna a lista de filmes
-        let result = await filmeDAO.getSelectAllFilms()
+        //Chama a função do DAO para retorna a lista de classificações
+        let result = await classificacaoEtariaDAO.getSelectAllAgeRating()
 
         if (result) {
             if (result.length > 0) {
                 MESSAGE.HEADER.status = MESSAGE.SUCESS_REQUEST.status
                 MESSAGE.HEADER.status_code = MESSAGE.SUCESS_REQUEST.status_code
-                MESSAGE.HEADER.response.films = result
+                MESSAGE.HEADER.response.ageRating = result
 
                 return MESSAGE.HEADER //200
             } else {
@@ -41,8 +41,8 @@ const listarFilmes = async function () {
         return MESSAGE.ERROR_INTERNAL_SERVER_CONTROLLER //500
     }
 }
-//Retorna um filme filtrando pelo ID
-const buscarFilmeId = async function (id) {
+//Retorna uma classificação filtrando pelo ID
+const buscarClassificacaoEtariaId = async function (id) {
 
     //Realizanodo uma cópia do objeto MESSAGE_DEFAULT, permitindo que as alterações desta função
     //não interfiram em outras funções
@@ -52,13 +52,13 @@ const buscarFilmeId = async function (id) {
         //Validação de campo obrigatório
         if (id != '' && id != null && id != undefined && !isNaN(id) && id > 0) {
 
-            let result = await filmeDAO.getSelectByIdFilms(parseInt(id))
+            let result = await classificacaoEtariaDAO.getSelectByIdAgeRating(parseInt(id))
 
             if (result) {
                 if (result.length > 0) {
                     MESSAGE.HEADER.status = MESSAGE.SUCESS_REQUEST.status
                     MESSAGE.HEADER.status_code = MESSAGE.SUCESS_REQUEST.status_code
-                    MESSAGE.HEADER.response.film = result
+                    MESSAGE.HEADER.response.ageRating = result
 
                     return MESSAGE.HEADER
                 } else {
@@ -77,31 +77,31 @@ const buscarFilmeId = async function (id) {
 
 
 }
-//Insere um novo filme
-const inserirFilme = async function (filme, contentType) {
+//Insere uma nova classificações etárias
+const inserirClassificacaoEtaria = async function (classificacaoEtaria, contentType) {
 
     let MESSAGE = JSON.parse(JSON.stringify(MESSAGE_DEFAULT))
 
 
     try {
         if (String(contentType).toUpperCase() == 'APPLICATION/JSON') {
-            let validarDados = await validarDadosFilmes(filme)
+            let validarDados = await validarDadosClassificacaoEtaria(classificacaoEtaria)
             if (!validarDados) {
                 //Chama a função do DAO para insirir um novo filme
-                let result = await filmeDAO.setInsertFilms(filme)
+                let result = await classificacaoEtariaDAO.setInsertAgeRating(classificacaoEtaria)
 
                 if (result) {
 
                     //Chama a função para recebero ID gerado no banco de dados
-                    let lastIdFilme = await filmeDAO.getSelectLastIdFilm()
+                    let lastIdAgeRating = await classificacaoEtariaDAO.getSelectLastIdAgeRating()
 
-                    if (lastIdFilme) {
-                        //Adiciona no JSON de filme o ID que foi gerado pelo BD
-                        filme.id                    =   lastIdFilme
+                    if (lastIdAgeRating) {
+                        //Adiciona no JSON de classificação etária o ID que foi gerado pelo BD
+                        classificacaoEtaria.id     =   lastIdAgeRating
                         MESSAGE.HEADER.status       =   MESSAGE.SUCESS_CREATED_ITEM.status
                         MESSAGE.HEADER.status_code  =   MESSAGE.SUCESS_CREATED_ITEM.status_code
                         MESSAGE.HEADER.message      =   MESSAGE.SUCESS_CREATED_ITEM.message
-                        MESSAGE.HEADER.response     =   filme
+                        MESSAGE.HEADER.response     =   classificacaoEtaria
 
                         return MESSAGE.HEADER //201
                     } else {
@@ -121,8 +121,9 @@ const inserirFilme = async function (filme, contentType) {
     }
 
 }
-//Atualiza um filme filtrando pelo ID
-const atualizarFilme = async function (filme, id, contentType) {
+
+//Atualiza uma classificação etaria filtrando pelo ID
+const atualizarClassificacaoEtaria = async function (classificacaoEtaria, id, contentType) {
 
     let MESSAGE = JSON.parse(JSON.stringify(MESSAGE_DEFAULT))
 
@@ -131,26 +132,26 @@ const atualizarFilme = async function (filme, id, contentType) {
 
         //Validação do content-type
         if (String(contentType).toUpperCase() == 'APPLICATION/JSON') {
-            let validarDados = await validarDadosFilmes(filme)
+            let validarDados = await validarDadosClassificacaoEtaria(classificacaoEtaria)
             if (!validarDados) {
 
                 //CHama a função para validar a consistencia de ID e verificar se existe no BD
-                let validarID = await buscarFilmeId(id)
+                let validarID = await buscarClassificacaoEtariaId(id)
 
                 //Verifica se o ID existe no BD, caso exista teremos o status 200
                 if (validarID.status_code == 200) {
 
-                    //Adicionando o ID no JSON com os dados do filme
-                    filme.id = parseInt(id)
+                    //Adicionando o ID no JSON com os dados da classificação
+                    classificacaoEtaria.id = parseInt(id)
 
-                    //Chama a função do DAO para atualizar um filme
-                    let result = await filmeDAO.setUpdateFilms(filme)
+                    //Chama a função do DAO para atualizar uma classificação
+                    let result = await classificacaoEtariaDAO.setUpdateAgeRating(classificacaoEtaria)
 
                     if (result) {
                         MESSAGE.HEADER.status = MESSAGE.SUCESS_UPDATED_ITEM.status
                         MESSAGE.HEADER.status_code = MESSAGE.SUCESS_UPDATED_ITEM.status_code
                         MESSAGE.HEADER.message = MESSAGE.SUCESS_UPDATED_ITEM.message
-                        MESSAGE.HEADER.response = filme
+                        MESSAGE.HEADER.response = classificacaoEtaria
 
                         return MESSAGE.HEADER //200
                     } else {
@@ -171,20 +172,20 @@ const atualizarFilme = async function (filme, id, contentType) {
     }
 
 }
-//Apaga um filme filtrando pelo ID
-const excluirFilme = async function (id) {
+//Apaga uma classificação etária filtrando pelo ID
+const excluirClassificacaoEtaria = async function (id) {
 
     let MESSAGE = JSON.parse(JSON.stringify(MESSAGE_DEFAULT))
 
     try {
         //CHama a função para validar a consistencia de ID e verificar se existe no BD
-        let validarID = await buscarFilmeId(id)
+        let validarID = await buscarClassificacaoEtariaId(id)
 
         //Verifica se o ID existe no BD, caso exista teremos o status 200
         if (validarID.status_code == 200) {
 
-            //Chama a função do DAO para atualizar um filme
-            let result = await filmeDAO.setDeleteFilms(parseInt(id))
+            //Chama a função do DAO para atualizar uma classificação
+            let result = await classificacaoEtariaDAO.setDeleteAgeRating(parseInt(id))
 
             if (result) {
                 MESSAGE.HEADER.status = MESSAGE.SUCESS_DELETED_ITEM.status
@@ -206,47 +207,36 @@ const excluirFilme = async function (id) {
 
 }
 module.exports = {
-    listarFilmes,
-    buscarFilmeId,
-    inserirFilme,
-    atualizarFilme,
-    excluirFilme
+    listarClassificacoesEtarias,
+    buscarClassificacaoEtariaId,
+    inserirClassificacaoEtaria,
+    atualizarClassificacaoEtaria,
+    excluirClassificacaoEtaria
 }
 
 //Validação dos dados de cadastros do Filme
-const validarDadosFilmes = async function (filme) {
+const validarDadosClassificacaoEtaria = async function (classificacaoEtaria) {
 
     let MESSAGE = JSON.parse(JSON.stringify(MESSAGE_DEFAULT))
 
-    if (filme.nome == '' || filme.nome == null || filme.nome == undefined || filme.nome.length > 100) {
-        MESSAGE.ERROR_REQUIRED_FIELDS.invalid_field = 'Atributo [NOME] inválido !!!'
+    if (classificacaoEtaria.faixa_etaria == '' || classificacaoEtaria.faixa_etaria == null || classificacaoEtaria.faixa_etaria == undefined || typeof (classificacaoEtaria.faixa_etaria) != 'number') {
+        MESSAGE.ERROR_REQUIRED_FIELDS.invalid_field = 'Atributo [FAIXA ETÁRIA] inválido !!!'
         return MESSAGE.ERROR_REQUIRED_FIELDS //400
 
-    } else if (filme.sinopse == undefined) {
-        MESSAGE.ERROR_REQUIRED_FIELDS.invalid_field = 'Atributo [SINOPSE] inválido !!!'
+    } else if (classificacaoEtaria.sigla == '' || classificacaoEtaria.sigla == null || classificacaoEtaria.sigla == undefined || classificacaoEtaria.sigla.length > 5) {
+        MESSAGE.ERROR_REQUIRED_FIELDS.invalid_field = 'Atributo [SIGLA] inválido !!!'
         return MESSAGE.ERROR_REQUIRED_FIELDS //400
 
-    } else if (filme.data_lancamento == undefined || filme.data_lancamento.length != 10) {
-        MESSAGE.ERROR_REQUIRED_FIELDS.invalid_field = 'Atributo [DATA LANÇAMENTO] inválido !!!'
+
+    } else if (classificacaoEtaria.descricao == '' || classificacaoEtaria.descricao == null || classificacaoEtaria.descricao == undefined || classificacaoEtaria.descricao.length > 200) {
+        MESSAGE.ERROR_REQUIRED_FIELDS.invalid_field = 'Atributo [DESCRIÇÃO] inválido !!!'
         return MESSAGE.ERROR_REQUIRED_FIELDS //400
 
-    } else if (filme.duracao == '' || filme.duracao == null || filme.duracao == undefined || filme.duracao.length > 8) {
-        MESSAGE.ERROR_REQUIRED_FIELDS.invalid_field = 'Atributo [DURAÇÃO] inválido !!!'
+    } else if (classificacaoEtaria.detalhes == undefined) {
+        MESSAGE.ERROR_REQUIRED_FIELDS.invalid_field = 'Atributo [DETALHES] inválido !!!'
         return MESSAGE.ERROR_REQUIRED_FIELDS //400
 
-    } else if (filme.orcamento == '' || filme.orcamento == null || filme.orcamento == undefined || typeof (filme.orcamento) != 'number') {
-        MESSAGE.ERROR_REQUIRED_FIELDS.invalid_field = 'Atributo [ORÇAMENTO] inválido !!!'
-        return MESSAGE.ERROR_REQUIRED_FIELDS //400
-
-    } else if (filme.trailer == undefined || filme.trailer.length > 200) {
-        MESSAGE.ERROR_REQUIRED_FIELDS.invalid_field = 'Atributo [TRAILER] inválido !!!'
-        return MESSAGE.ERROR_REQUIRED_FIELDS //400
-
-    } else if (filme.capa == '' || filme.capa == null || filme.capa == undefined || filme.capa.length > 200) {
-        MESSAGE.ERROR_REQUIRED_FIELDS.invalid_field = 'Atributo [CAPA] inválido !!!'
-        return MESSAGE.ERROR_REQUIRED_FIELDS //400
-
-    } else {
+    }  else {
         return false
     }
 

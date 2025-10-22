@@ -1,5 +1,5 @@
 /*********************************************************************************************************************
- * Objetivo: Arquivo responsável pela realização do CRUD de filme no Banco de Dados MySQL
+ * Objetivo: Arquivo responsável pela realização do CRUD de filme no Banco de Dados MySQL da tabela filme
  * Data: 01/10/2025
  * Autor: Sidney
  * Versão: 1.0
@@ -82,7 +82,7 @@ const getSelectAllFilms = async function () {
     }
 
 }
-
+//Retorna o id do último filme cadastrado
 const getSelectLastIdFilm = async function () {
     try {
 
@@ -140,7 +140,6 @@ const getSelectByIdFilms = async function (id) {
     }
 
 }
-
 //Insere um filme no banco de dados
 const setInsertFilms = async function (filme) {
     try {
@@ -163,7 +162,6 @@ const setInsertFilms = async function (filme) {
     }
 
 }
-
 //Atualiza um filme existente no banco de dados filtrando pelo ID
 const setUpdateFilms = async function (filme) {
     try {
@@ -193,7 +191,6 @@ const setUpdateFilms = async function (filme) {
     }
 
 }
-
 //Apaga um filme existente no banco de dados filtrando pelo ID
 const setDeleteFilms = async function (id) {
     try {
