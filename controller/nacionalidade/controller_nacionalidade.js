@@ -1,7 +1,7 @@
 /*********************************************************************************************************************
  * Objetivo: Arquivo responsável pela manipulação de dados entre o APP e a Model da Nacionalidade
  *               (Validações, tratamento de dados, tratamento de erros, etc)
- * Data: 07/10/2025
+ * Data: 02/11/2025
  * Autor: Sidney
  * Versão: 1.0
  *********************************************************************************************************************/
