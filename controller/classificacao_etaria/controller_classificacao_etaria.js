@@ -87,7 +87,7 @@ const inserirClassificacaoEtaria = async function (classificacaoEtaria, contentT
         if (String(contentType).toUpperCase() == 'APPLICATION/JSON') {
             let validarDados = await validarDadosClassificacaoEtaria(classificacaoEtaria)
             if (!validarDados) {
-                //Chama a função do DAO para insirir um novo filme
+                //Chama a função do DAO para insirir um nova classificação
                 let result = await classificacaoEtariaDAO.setInsertAgeRating(classificacaoEtaria)
 
                 if (result) {
@@ -159,10 +159,10 @@ const atualizarClassificacaoEtaria = async function (classificacaoEtaria, id, co
                     }
 
                 } else {
-                    return validarID //Retrono da função de buscarFilmeID (400 ou 404 ou 500)
+                    return validarID //Retrono da função de buscarClassificaçãoEtáriaID (400 ou 404 ou 500)
                 }
             } else {
-                return validarDados //Retorno da função de validar dados o Filme // 400-
+                return validarDados //Retorno da função de validar dados o Classificação Etária // 400-
             }
         } else {
             return MESSAGE.ERROR_CONTENT_TYPE //415
@@ -199,7 +199,7 @@ const excluirClassificacaoEtaria = async function (id) {
             }
 
         } else {
-            return validarID //Retrono da função de buscarFilmeID (400 ou 404 ou 500)
+            return validarID //Retrono da função de buscarClassificaçãoEtariaID (400 ou 404 ou 500)
         }
     } catch (error) {
         return MESSAGE.ERROR_INTERNAL_SERVER_CONTROLLER //500
@@ -214,7 +214,7 @@ module.exports = {
     excluirClassificacaoEtaria
 }
 
-//Validação dos dados de cadastros do Filme
+//Validação dos dados de cadastros da Classifcação Etária
 const validarDadosClassificacaoEtaria = async function (classificacaoEtaria) {
 
     let MESSAGE = JSON.parse(JSON.stringify(MESSAGE_DEFAULT))
