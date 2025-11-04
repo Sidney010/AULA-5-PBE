@@ -13,7 +13,7 @@ const nacionalidadeDAO = require('../../model/DAO/nacionalidade.js')
 const MESSAGE_DEFAULT = require('../modulo/config_messages.js')
 
 //Retorna a lista as nacionalidades
-const listarNacionalidade = async function () {
+const listarNacionalidades = async function () {
 
     //Realizanodo uma cópia do objeto MESSAGE_DEFAULT, permitindo que as alterações desta função
     //não interfiram em outras funções
@@ -206,7 +206,7 @@ const excluirNacionalidade = async function (id) {
 
 }
 module.exports = {
-    listarNacionalidade,
+    listarNacionalidades,
     buscarNacionalidadeId,
     inserirNacionalidade,
     atualizarNacionalidade,

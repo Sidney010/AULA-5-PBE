@@ -187,7 +187,7 @@ const controllerClassificacaoEtaria = require('./controller/classificacao_etaria
 
 //Retorna ums lista de Classificação Etária
 app.get('/v1/locadora/classificacaoEtarias', cors(), async function (request, response) {
-    //Chama a função da controller para retornar todos as classsifcação etária
+    //Chama a função da controller para retornar todos as classifcação etária
     let classificacaoEtaria = await controllerClassificacaoEtaria.listarClassificacoesEtarias()
     response.status(classificacaoEtaria.status_code)
     response.json(classificacaoEtaria)
@@ -200,7 +200,7 @@ app.get('/v1/locadora/classificacaoEtaria/:id', cors(), async function (request,
     let idClassificacaoEtaria = request.params.id
 
     //Chama a função da controller para retornar a classificação Etaria do id escolhido
-    let classificacaoEtaria = await controllerGenero.buscarGeneroId(idClassificacaoEtaria)
+    let classificacaoEtaria = await controllerClassificacaoEtaria.buscarClassificacaoEtariaId(idClassificacaoEtaria)
 
     response.status(classificacaoEtaria.status_code)
     response.json(classificacaoEtaria)
@@ -228,14 +228,14 @@ app.put('/v1/locadora/classificacaoEtaria/:id', cors(), bodyParserJSON, async fu
     //Recebe os dados do body
     let dadosBody = request.body
     
-    //Receba o id do genero encaminahdo pela URL
-    let idGenero = request.params.id
+    //Receba o id da Classificação Etária encaminahdo pela URL
+    let idClassificacaoEtaria = request.params.id
 
     //Recebe o content tye da requisição
     let contentType = request.headers['content-type']
 
     //Chama a função da controller para dados da Classificação Etaria, enviamos os dados do body e parametros e o content-type
-    let classificacaoEtaria = await controllerClassificacaoEtaria.atualizarClassificacaoEtaria(dadosBody, idGenero, contentType)
+    let classificacaoEtaria = await controllerClassificacaoEtaria.atualizarClassificacaoEtaria(dadosBody, idClassificacaoEtaria, contentType)
 
     response.status(classificacaoEtaria.status_code)
     response.json(classificacaoEtaria)
@@ -244,7 +244,7 @@ app.put('/v1/locadora/classificacaoEtaria/:id', cors(), bodyParserJSON, async fu
     //Deleta uma Classificação Etária no BD
 app.delete('/v1/locadora/classificacaoEtaria/:id', cors(), async function (request, response) {
    
-    //Receba o id da classifição Etaria encaminahdo pela URL
+    //Receba o id da classificação Etaria encaminahdo pela URL
     let idClassificacaoEtaria = request.params.id
 
     //Chama a função da controller para dados o Classificação Etaria, enviamos os dados do body e parametros e o content-type
@@ -252,6 +252,158 @@ app.delete('/v1/locadora/classificacaoEtaria/:id', cors(), async function (reque
 
     response.status(classificacaoEtaria.status_code)
     response.json(classificacaoEtaria)
+})
+//************************************************************************************** */
+//Endpoint para CRUD de Nacionalidade
+const controllerNacionalidade = require('./controller/nacionalidade/controller_nacionalidade.js')
+
+//Retorna ums lista de Nacionalidade
+app.get('/v1/locadora/nacionalidades', cors(), async function (request, response) {
+    //Chama a função da controller para retornar todos as nacionalidades
+    let nacionalidade = await controllerNacionalidade.listarNacionalidades()
+    
+    response.status(nacionalidade.status_code)
+    response.json(nacionalidade)
+
+})
+
+//Retorna uma Nacionalidade filtrando pelo ID
+app.get('/v1/locadora/nacionalidade/:id', cors(), async function (request, response) {
+
+    let idNacionalidade = request.params.id
+
+    //Chama a função da controller para retornar a Nacionalidade do id escolhido
+    let nacionalidade = await controllerNacionalidade.buscarNacionalidadeId(idNacionalidade)
+
+    response.status(nacionalidade.status_code)
+    response.json(nacionalidade)
+
+})
+
+    //Insere uma nova Nacionalidade no BD
+app.post('/v1/locadora/nacionalidade', cors(), bodyParserJSON, async function (request, response) {
+    //Recebe o objeto JSON pelo o body da requisição
+    let dadosBody = request.body
+
+    //Recebe o content tye da requisição
+    let contentType = request.headers['content-type']
+
+    //Chama a função da controller para inserir uma nacionalidade, enviamos os dados do body e o content-type
+    let nacionalidade = await controllerNacionalidade.inserirNacionalidade(dadosBody, contentType)
+
+    response.status(nacionalidade.status_code)
+    response.json(nacionalidade)
+
+})
+
+    //Atualiza uma Nacionalidade no BD
+app.put('/v1/locadora/nacionalidade/:id', cors(), bodyParserJSON, async function (request, response) {
+
+    //Recebe os dados do body
+    let dadosBody = request.body
+    
+    //Receba o id da nacionalidade encaminahdo pela URL
+    let idNacionalidade = request.params.id
+
+    //Recebe o content tye da requisição
+    let contentType = request.headers['content-type']
+
+    //Chama a função da controller para dados da Nacionalidade, enviamos os dados do body e parametros e o content-type
+    let nacionalidade = await controllerNacionalidade.atualizarNacionalidade(dadosBody, idNacionalidade, contentType)
+
+    response.status(nacionalidade.status_code)
+    response.json(nacionalidade)
+
+})
+
+    //Deleta uma Nacionalidade no BD
+app.delete('/v1/locadora/nacionalidade/:id', cors(), async function (request, response) {
+   
+    //Receba o id da nacionalidade encaminahdo pela URL
+    let idNacionalidade = request.params.id
+
+    //Chama a função da controller para dados da nacionalidade, enviamos os dados do body e parametros e o content-type
+    let nacionalidade = await controllerNacionalidade.excluirNacionalidade(idNacionalidade)
+
+    response.status(nacionalidade.status_code)
+    response.json(nacionalidade)
+
+})
+//************************************************************************************** */
+//Endpoint para CRUD de Estudio
+const controllerEstudio = require('./controller/estudio/controller_estudio.js')
+
+//Retorna ums lista de Estudios
+app.get('/v1/locadora/estudios', cors(), async function (request, response) {
+    //Chama a função da controller para retornar todos os estudios
+    let estudio = await controllerEstudio.listarEstudios()
+    
+    response.status(estudio.status_code)
+    response.json(estudio)
+
+})
+
+//Retorna um Estudio filtrando pelo ID
+app.get('/v1/locadora/estudio/:id', cors(), async function (request, response) {
+
+    let idEstudio = request.params.id
+
+    //Chama a função da controller para retornar o Estudio do id escolhido
+    let estudio = await controllerEstudio.buscarEstudioId(idEstudio)
+
+    response.status(estudio.status_code)
+    response.json(estudio)
+
+})
+
+    //Insere um novo Estudio no BD
+app.post('/v1/locadora/estudio', cors(), bodyParserJSON, async function (request, response) {
+    //Recebe o objeto JSON pelo o body da requisição
+    let dadosBody = request.body
+
+    //Recebe o content tye da requisição
+    let contentType = request.headers['content-type']
+
+    //Chama a função da controller para inserir um estudio, enviamos os dados do body e o content-type
+    let estudio = await controllerEstudio.inserirEstudio(dadosBody, contentType)
+
+    response.status(estudio.status_code)
+    response.json(estudio)
+
+})
+
+    //Atualiza um Estudio no BD
+app.put('/v1/locadora/estudio/:id', cors(), bodyParserJSON, async function (request, response) {
+
+    //Recebe os dados do body
+    let dadosBody = request.body
+    
+    //Receba o id do estudio encaminahdo pela URL
+    let idEstudio = request.params.id
+
+    //Recebe o content tye da requisição
+    let contentType = request.headers['content-type']
+
+    //Chama a função da controller para dados do estudio, enviamos os dados do body e parametros e o content-type
+    let estudio = await controllerEstudio.atualizarEstudio(dadosBody, idEstudio, contentType)
+
+    response.status(estudio.status_code)
+    response.json(estudio)
+
+})
+
+    //Deleta um Estudio no BD
+app.delete('/v1/locadora/estudio/:id', cors(), async function (request, response) {
+   
+    //Receba o id do estudio encaminahdo pela URL
+    let idEstudio = request.params.id
+
+    //Chama a função da controller para dados do estudio, enviamos os dados do body e parametros e o content-type
+    let estudio = await controllerEstudio.excluirEstudio(idEstudio)
+
+    response.status(estudio.status_code)
+    response.json(estudio)
+
 })
 //************************************************************************************** */
 
