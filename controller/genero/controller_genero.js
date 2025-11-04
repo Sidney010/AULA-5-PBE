@@ -13,7 +13,7 @@ const generoDAO = require('../../model/DAO/genero.js')
 const MESSAGE_DEFAULT = require('../modulo/config_messages.js')
 
 //Retorna a lista dos gêneros
-const listarGenero = async function () {
+const listarGeneros = async function () {
 
     //Realizanodo uma cópia do objeto MESSAGE_DEFAULT, permitindo que as alterações desta função
     //não interfiram em outras funções
@@ -205,7 +205,7 @@ const excluirGenero = async function (id) {
 
 }
 module.exports = {
-    listarGenero,
+    listarGeneros,
     buscarGeneroId,
     inserirGenero,
     atualizarGenero,

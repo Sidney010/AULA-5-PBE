@@ -28,9 +28,10 @@ app.use((request, response, next) => {
     next()                                                  //Próximo, ler tudo
 })
 
+//************************************************************************************** */
+//Endpoint para CRUD de Filmes
 const controllerFilme = require('./controller/filme/controller_filme.js')
 
-//Endpoint para CRUD de Filmes
 //Retorna ums lista de filmes
 app.get('/v1/locadora/filmes', cors(), async function (request, response) {
     //Chama a função da controller para retornar todos os filmes
@@ -46,7 +47,7 @@ app.get('/v1/locadora/filme/:id', cors(), async function (request, response) {
 
     let idFilme = request.params.id
 
-    //Chama a função da controller para retornar todos os filmes
+    //Chama a função da controller para retornar o filme do id escolhido
     let filme = await controllerFilme.buscarFilmeId(idFilme)
 
     response.status(filme.status_code)
@@ -104,6 +105,155 @@ app.delete('/v1/locadora/filme/:id', cors(), async function (request, response) 
     response.json(filme)
 
 })
+//************************************************************************************** */
+//Endpoint para CRUD de Gênero
+const controllerGenero = require('./controller/genero/controller_genero.js')
+
+//Retorna ums lista de Gênero
+app.get('/v1/locadora/generos', cors(), async function (request, response) {
+    //Chama a função da controller para retornar todos os gêneros
+    let genero = await controllerGenero.listarGeneros()
+    response.status(genero.status_code)
+    response.json(genero)
+
+})
+
+//Retorna um gênero filtrando pelo ID
+app.get('/v1/locadora/genero/:id', cors(), async function (request, response) {
+
+    let idGenero = request.params.id
+
+    //Chama a função da controller para retornar o genero do id escolhido
+    let genero = await controllerGenero.buscarGeneroId(idGenero)
+
+    response.status(genero.status_code)
+    response.json(genero)
+
+})
+
+    //Insere um novo gênero no BD
+app.post('/v1/locadora/genero', cors(), bodyParserJSON, async function (request, response) {
+    //Recebe o objeto JSON pelo o body da requisição
+    let dadosBody = request.body
+
+    //Recebe o content tye da requisição
+    let contentType = request.headers['content-type']
+
+    //Chama a função da controller para inserir o genero, enviamos os dados do body e o content-type
+    let genero = await controllerGenero.inserirGenero(dadosBody, contentType)
+
+    response.status(genero.status_code)
+    response.json(genero)
+})
+
+    //Atualiza um gênero no BD
+app.put('/v1/locadora/genero/:id', cors(), bodyParserJSON, async function (request, response) {
+
+    //Recebe os dados do body
+    let dadosBody = request.body
+    
+    //Receba o id do genero encaminahdo pela URL
+    let idGenero = request.params.id
+
+    //Recebe o content tye da requisição
+    let contentType = request.headers['content-type']
+
+    //Chama a função da controller para dados o gênero, enviamos os dados do body e parametros e o content-type
+    let genero = await controllerGenero.atualizarGenero(dadosBody, idGenero, contentType)
+
+    response.status(genero.status_code)
+    response.json(genero)
+
+
+
+})
+
+    //Deleta um gênero no BD
+app.delete('/v1/locadora/genero/:id', cors(), async function (request, response) {
+   
+    //Receba o id do gênero encaminahdo pela URL
+    let idGenero = request.params.id
+
+    //Chama a função da controller para dados o Gênero, enviamos os dados do body e parametros e o content-type
+    let genero = await controllerGenero.excluirGenero(idGenero)
+
+    response.status(genero.status_code)
+    response.json(genero)
+
+})
+//************************************************************************************** */
+//Endpoint para CRUD de Classificação Etária
+const controllerClassificacaoEtaria = require('./controller/classificacao_etaria/controller_classificacao_etaria.js')
+
+//Retorna ums lista de Classificação Etária
+app.get('/v1/locadora/classificacaoEtarias', cors(), async function (request, response) {
+    //Chama a função da controller para retornar todos as classsifcação etária
+    let classificacaoEtaria = await controllerClassificacaoEtaria.listarClassificacoesEtarias()
+    response.status(classificacaoEtaria.status_code)
+    response.json(classificacaoEtaria)
+
+})
+
+//Retorna uma Classificação Etária filtrando pelo ID
+app.get('/v1/locadora/classificacaoEtaria/:id', cors(), async function (request, response) {
+
+    let idClassificacaoEtaria = request.params.id
+
+    //Chama a função da controller para retornar a classificação Etaria do id escolhido
+    let classificacaoEtaria = await controllerGenero.buscarGeneroId(idClassificacaoEtaria)
+
+    response.status(classificacaoEtaria.status_code)
+    response.json(classificacaoEtaria)
+
+})
+
+    //Insere uma nova Classificação Etária no BD
+app.post('/v1/locadora/classificacaoEtaria', cors(), bodyParserJSON, async function (request, response) {
+    //Recebe o objeto JSON pelo o body da requisição
+    let dadosBody = request.body
+
+    //Recebe o content tye da requisição
+    let contentType = request.headers['content-type']
+
+    //Chama a função da controller para inserir uma Classificação Etária, enviamos os dados do body e o content-type
+    let classificacaoEtaria = await controllerClassificacaoEtaria.inserirClassificacaoEtaria(dadosBody, contentType)
+
+    response.status(classificacaoEtaria.status_code)
+    response.json(classificacaoEtaria)
+})
+
+    //Atualiza uma Classificação Etária no BD
+app.put('/v1/locadora/classificacaoEtaria/:id', cors(), bodyParserJSON, async function (request, response) {
+
+    //Recebe os dados do body
+    let dadosBody = request.body
+    
+    //Receba o id do genero encaminahdo pela URL
+    let idGenero = request.params.id
+
+    //Recebe o content tye da requisição
+    let contentType = request.headers['content-type']
+
+    //Chama a função da controller para dados da Classificação Etaria, enviamos os dados do body e parametros e o content-type
+    let classificacaoEtaria = await controllerClassificacaoEtaria.atualizarClassificacaoEtaria(dadosBody, idGenero, contentType)
+
+    response.status(classificacaoEtaria.status_code)
+    response.json(classificacaoEtaria)
+})
+
+    //Deleta uma Classificação Etária no BD
+app.delete('/v1/locadora/classificacaoEtaria/:id', cors(), async function (request, response) {
+   
+    //Receba o id da classifição Etaria encaminahdo pela URL
+    let idClassificacaoEtaria = request.params.id
+
+    //Chama a função da controller para dados o Classificação Etaria, enviamos os dados do body e parametros e o content-type
+    let classificacaoEtaria = await controllerClassificacaoEtaria.excluirClassificacaoEtaria(idClassificacaoEtaria)
+
+    response.status(classificacaoEtaria.status_code)
+    response.json(classificacaoEtaria)
+})
+//************************************************************************************** */
 
 app.listen(PORT, function () {
     console.log('API aguardando requisições !!!')

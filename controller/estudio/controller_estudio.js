@@ -210,7 +210,10 @@ const excluirEstudio = async function (id) {
 }
 module.exports = {
     listarEstudios,
-    buscarEstudioId
+    buscarEstudioId,
+    inserirEstudio,
+    atualizarEstudio,
+    excluirEstudio
 }
 
 //Validação dos dados de cadastros do Estudio
