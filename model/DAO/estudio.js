@@ -1,5 +1,5 @@
 /*********************************************************************************************************************
- * Objetivo: Arquivo responsável pela realização do CRUD de filme no Banco de Dados MySQL da tabela estudio
+ * Objetivo: Arquivo responsável pela realização do CRUD de estudio no Banco de Dados MySQL da tabela estudio
  * Data: 22/10/2025
  * Autor: Sidney
  * Versão: 1.0

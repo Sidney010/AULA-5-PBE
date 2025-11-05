@@ -1,5 +1,5 @@
 /*********************************************************************************************************************
- * Objetivo: Arquivo responsável pela padronização de todas as mensages da API do projeto de Filmes 
+ * Objetivo: Arquivo responsável pela padronização de todas as mensages da API do projeto de locadora
  * 
  * Data: 07/10/2025
  * Autor: Sidney

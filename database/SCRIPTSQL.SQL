@@ -1,0 +1,205 @@
+
+USE db_locadora_filme_ds2T_25_2;
+CREATE TABLE tbl_filme (
+	filme_id INT PRIMARY KEY AUTO_INCREMENT,
+	nome VARCHAR(100) NOT NULL,
+	sinopse TEXT,
+	data_lancamento DATE,
+	duracao TIME NOT NULL,
+	orcamento DECIMAL NOT NULL,
+	trailer VARCHAR(200),
+	capa VARCHAR(200) NOT NULL
+);
+
+INSERT INTO tbl_filme (nome, sinopse, data_lancamento, duracao, orcamento, trailer, capa)
+VALUES ('Era do Gelo', 'Fim da era glacial', '2002-03-22','01:21:01', 59000000.00 ,'https://www.youtube.com/watch?v=wuYXN78XTHA', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTelshMB2Q7U87Nd7N1qZGSQEf6iam9J8NWuEBTYRlcphwX8UDMVbklQdUqfEDdq2SjEz_sQDNJ1_IkS_Xmzm81-847OBPMvBNYAvKKkk4M-w');
+
+INSERT INTO tbl_filme (nome, sinopse, data_lancamento, duracao, orcamento, trailer, capa)
+VALUES ('Era do Gelo 2', 'O aquecimento global traz ameaças de inundações generalizadas a regiões que antes eram geladas. Manny, Sid e Diego partem em busca de um refúgio seguro. ', '2006-03-31','01:31:01', 80000000.00 ,'https://www.youtube.com/watch?v=SC4PXMMjPiY', 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQ7lS4X4Oy50lTAqXT-bF859EYrnsSatpMuaS_rn-I7TAtd6K4r2uZfXtYX-U-t1A32qo6xKYSXY-dqTEMa7NffyD5n6-GNbj6UCJCwdjQiEA');
+
+INSERT INTO tbl_filme (nome, sinopse, data_lancamento, duracao, orcamento, trailer, capa)
+VALUES ('Shrek', 'Um ogro chamado Shrek embarca em uma jornada para resgatar a princesa Fiona e recuperar a posse de seu pântano, com a ajuda de um falante burro.', 
+'2001-05-18', '01:30:00', 60000000.00, 
+'https://www.youtube.com/watch?v=CwXOrWvPBPk', 
+'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1HD0j8zq1F3RM7rl1BZqRMV9lM4t526tvEQ&s');
+
+INSERT INTO tbl_filme (nome, sinopse, data_lancamento, duracao, orcamento, trailer, capa)
+VALUES ('Toy Story', 'Woody, o brinquedo favorito de Andy, sente-se ameaçado com a chegada do moderno boneco Buzz Lightyear, que acredita ser um verdadeiro patrulheiro espacial.', 
+'1995-11-22', '01:21:00', 30000000.00, 
+'https://www.youtube.com/watch?v=rNk1Wi8SvNc', 
+'https://br.web.img3.acsta.net/medias/nmedia/18/91/05/36/20127436.jpg');
+
+INSERT INTO tbl_filme (nome, sinopse, data_lancamento, duracao, orcamento, trailer, capa)
+VALUES ('Procurando Nemo', 'Quando seu filho Nemo é capturado por um mergulhador, Marlin parte em uma perigosa jornada pelos oceanos ao lado da esquecida Dory para resgatá-lo.', 
+'2003-05-30', '01:40:00', 94000000.00, 
+'https://www.youtube.com/watch?v=SPHfeNgogVs', 
+'https://www.papodecinema.com.br/wp-content/uploads/2012/10/20190604-poster-banner-grande-procurando-nemo-frete-gratis-453455-d_nq_np_690901-mlb27145451767_042018-f.webp');
+
+INSERT INTO tbl_filme (nome, sinopse, data_lancamento, duracao, orcamento, trailer, capa)
+VALUES ('Os Incríveis', 'Uma família de super-heróis tenta levar uma vida normal, mas precisa voltar à ação para salvar o mundo de um novo vilão.', 
+'2004-11-05', '01:55:00', 92000000.00, 
+'https://www.youtube.com/watch?v=-UaGUdNJdRQ', 
+'https://www.aabbportoalegre.com.br/intranet/modulos/biblioteca/imgs/2526.jpg');
+
+INSERT INTO tbl_filme (nome, sinopse, data_lancamento, duracao, orcamento, trailer, capa)
+VALUES ('Madagascar', 'Quatro animais do zoológico de Nova York acidentalmente vão parar na ilha de Madagascar e precisam aprender a sobreviver na natureza selvagem.', 
+'2005-05-27', '01:26:00', 75000000.00, 
+'https://www.youtube.com/watch?v=fq5zU9T_Hl4', 
+'https://br.web.img2.acsta.net/medias/nmedia/18/91/54/02/20150796.jpg');
+
+INSERT INTO tbl_filme (nome, sinopse, data_lancamento, duracao, orcamento, trailer, capa)
+VALUES ('Up - Altas Aventuras', 'Um idoso rabugento e um escoteiro viajam para a América do Sul em uma casa voadora levantada por balões, vivendo uma jornada inesquecível.', 
+'2009-05-29', '01:36:00', 175000000.00, 
+'https://www.youtube.com/watch?v=ORFWdXl_zJ4', 
+'https://br.web.img3.acsta.net/medias/nmedia/18/92/03/73/20176438.jpg');
+
+INSERT INTO tbl_filme (nome, sinopse, data_lancamento, duracao, orcamento, trailer, capa)
+VALUES ('Meu Malvado Favorito', 'Um vilão chamado Gru planeja roubar a Lua, mas sua vida muda quando ele adota três meninas órfãs que o ensinam o verdadeiro sentido de amor.', 
+'2010-07-09', '01:35:00', 69000000.00, 
+'https://www.youtube.com/watch?v=zzCZ1W_CUoI', 
+'https://m.media-amazon.com/images/S/pv-target-images/c60fd3cb5bee84a2a2859239761c80656d029c9154e21e07774b6224f0ffe075.jpg');
+
+INSERT INTO tbl_filme (nome, sinopse, data_lancamento, duracao, orcamento, trailer, capa)
+VALUES ('Detona Ralph', 'Ralph, o vilão de um jogo de fliperama, sonha em ser um herói e embarca em uma jornada pelos jogos de arcade para provar seu valor.', 
+'2012-11-02', '01:41:00', 165000000.00, 
+'https://www.youtube.com/watch?v=87E6N7ToCxs', 
+'https://mutantexis.wordpress.com/wp-content/uploads/2012/12/blog-detona-ralph-posterl1.jpg');
+
+INSERT INTO tbl_filme (nome, sinopse, data_lancamento, duracao, orcamento, trailer, capa)
+VALUES ('Frozen: Uma Aventura Congelante', 'A destemida Anna parte em uma jornada com um alpinista e um boneco de neve para encontrar sua irmã Elsa e acabar com o inverno eterno.', 
+'2013-11-27', '01:42:00', 150000000.00, 
+'https://www.youtube.com/watch?v=TbQm5doF_Uc', 
+'https://br.web.img2.acsta.net/pictures/210/461/21046189_20131002174340886.jpg');
+
+SELECT * FROM tbl_filme ORDER BY filme_id DESC LIMIT 1;
+SELECT * FROM tbl_genero;
+SHOW tables;
+DESC tbl_filme;
+DROP TABLE tbl_teste;
+DROP TABLE tbl_estudio;
+DELETE FROM tbl_filme;
+
+CREATE TABLE tbl_genero (
+	genero_id INT PRIMARY KEY AUTO_INCREMENT,
+	nome VARCHAR(100) NOT NULL UNIQUE,
+	descricao TEXT NOT NULL
+);
+INSERT INTO tbl_genero (nome, descricao)
+        VALUES ('Ficção Científica', 'Busca explorar o impacto da ciência e da tecnologia (real ou imaginária) na sociedade ou nos indivíduos, muitas vezes ambientado em futuros especulativos ou universos paralelos');
+        
+UPDATE tbl_genero SET 
+        nome                  =   'Ficção Científica',  
+        descricao             =   'Busca explorar o impacto da ciência e da tecnologia (real ou imaginária) na sociedade ou nos indivíduos, muitas vezes ambientado em futuros especulativos ou universos paralelos' 
+        where genero_id = 2;
+        
+        DELETE FROM tbl_genero where genero_id = 2;
+        
+CREATE TABLE tbl_classificacao_etaria (
+	classificacao_etaria_id INT PRIMARY KEY AUTO_INCREMENT,
+    faixa_etaria INT NOT NULL UNIQUE,
+	sigla VARCHAR(5) NOT NULL UNIQUE,
+	descricao VARCHAR(200) NOT NULL,   
+    detalhes TEXT     
+);
+
+INSERT INTO tbl_classificacao_etaria (faixa_etaria, sigla, descricao, detalhes)
+VALUES
+(0,  'L',   'Livre para todos os públicos', 
+ 'Conteúdo apropriado para todas as idades. Pode conter leves cenas de humor ou fantasia.'),
+(10, '10+', 'Não recomendado para menores de 10 anos', 
+ 'Pode conter cenas de violência leve, insinuações sexuais ou linguagem inapropriada moderada.'),
+(12, '12+',  'Não recomendado para menores de 12 anos', 
+ 'Pode conter violência, conteúdo sexual leve ou consumo moderado de drogas lícitas.'),
+(14, '14+',  'Não recomendado para menores de 14 anos', 
+ 'Cenas de violência, insinuações sexuais mais fortes ou temas intensos.'),
+(16, '16+',  'Não recomendado para menores de 16 anos', 
+ 'Cenas de violência explícita, drogas e sexualidade mais intensa.'),
+(18, '18+',  'Proibido para menores de 18 anos', 
+ 'Conteúdo adulto com cenas de sexo explícito, violência extrema ou drogas ilícitas.');
+
+CREATE TABLE tbl_nacionalidade (
+    nacionalidade_id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    gentilico VARCHAR(100),
+    sigla VARCHAR(5) NOT NULL,
+    continente VARCHAR(50),
+    lingua_oficial VARCHAR(100),
+    bandeira_url TEXT,
+    moeda VARCHAR(50)
+);
+
+ 
+ INSERT INTO tbl_nacionalidade (nome, gentilico, sigla, continente, lingua_oficial, bandeira_url, moeda)
+VALUES
+('Brasil', 'Brasileiro', 'BRA', 'América do Sul', 'Português', 'https://flagcdn.com/w320/br.png', 'Real'),
+('Estados Unidos', 'Americano', 'USA', 'América do Norte', 'Inglês', 'https://flagcdn.com/w320/us.png', 'Dólar'),
+('Reino Unido', 'Britânico', 'GBR', 'Europa', 'Inglês', 'https://flagcdn.com/w320/gb.png', 'Libra esterlina'),
+('Japão', 'Japonês', 'JPN', 'Ásia', 'Japonês', 'https://flagcdn.com/w320/jp.png', 'Iene'),
+('França', 'Francês', 'FRA', 'Europa', 'Francês', 'https://flagcdn.com/w320/fr.png', 'Euro');
+
+CREATE TABLE tbl_estudio (
+    estudio_id INT PRIMARY KEY AUTO_INCREMENT,
+    nome_fantasia VARCHAR(100) NOT NULL,
+    razao_social VARCHAR(200) NOT NULL,
+    cnpj VARCHAR(14) NOT NULL UNIQUE,
+    logradouro VARCHAR(100) NOT NULL,
+    numero VARCHAR(20) NOT NULL,
+    bairro VARCHAR(100) NOT NULL,
+    cidade VARCHAR(100) NOT NULL,
+    estado VARCHAR(50) NOT NULL,
+    pais VARCHAR(100) NOT NULL,
+    cep VARCHAR(9) NOT NULL,
+    complemento VARCHAR(200) NOT NULL,
+	email_contato VARCHAR(150),
+    telefone VARCHAR(20),
+    site_oficial VARCHAR(200)
+);
+INSERT INTO tbl_estudio (
+    nome_fantasia, razao_social, cnpj, logradouro, numero, bairro, cidade,
+    estado, pais, cep, complemento, email_contato, telefone, site_oficial
+) VALUES
+('Blue Sky Studios', 'Blue Sky Studios Entertainment Ltda', '12345678000199',
+ '100 Main Street', '200', 'Greenwich', 'Connecticut', 'CT', 'Estados Unidos', '06830-000',
+ 'Próximo ao parque central', 'contato@blueskystudios.com', '+1 203 555 1111', 'https://www.blueskystudios.com'),
+('Pixar Animation Studios', 'Pixar Animation Studios Inc.', '98765432000155',
+ '1200 Park Avenue', '500', 'Emeryville', 'Emeryville', 'CA', 'Estados Unidos', '94608-123',
+ 'Campus principal', 'contato@pixar.com', '+1 510 555 2222', 'https://www.pixar.com'),
+('Warner Bros', 'Warner Bros Entertainment Ltda', '10293847000166',
+ '4000 Warner Blvd', '4000', 'Burbank', 'Los Angeles', 'CA', 'Estados Unidos', '91522-000',
+ 'Sede mundial', 'contato@warnerbros.com', '+1 818 555 3333', 'https://www.warnerbros.com'),
+('DreamWorks Animation', 'DreamWorks Animation SKG Inc.', '11223344000188',
+ '1000 Flower St', '1000', 'Glendale', 'Los Angeles', 'CA', 'Estados Unidos', '91201-000',
+ 'Estúdio principal', 'info@dreamworks.com', '+1 818 555 4444', 'https://www.dreamworks.com'),
+('Studio Ghibli', 'Studio Ghibli Co., Ltd.', '99887766000122',
+ '1-4-25 Kajino-cho', '1', 'Koganei', 'Tóquio', 'Tokyo', 'Japão', '184-0002',
+ 'Próximo ao museu Ghibli', 'info@ghibli.jp', '+81 422 55 1234', 'https://www.ghibli.jp'),
+('Toei Animation', 'Toei Animation Co., Ltd.', '88776655000177',
+ '2-10-5 Higashi Oizumi', '2', 'Nerima', 'Tóquio', 'Tokyo', 'Japão', '178-8567',
+ 'Estúdio principal de animação', 'info@toei-anim.co.jp', '+81 3 3978 3181', 'https://www.toei-anim.co.jp'),
+('Globo Filmes', 'Globo Comunicações e Participações S.A.', '27896543000120',
+ 'Rua Lopes Quintas', '303', 'Jardim Botânico', 'Rio de Janeiro', 'RJ', 'Brasil', '22460-010',
+ 'Próximo aos estúdios Globo', 'contato@globofilmes.com', '+55 21 4002 8922', 'https://globofilmes.globo.com'),
+('O2 Filmes', 'O2 Cinema e Produções Ltda', '55667788000111',
+ 'Av. das Nações Unidas', '14171', 'Vila Gertrudes', 'São Paulo', 'SP', 'Brasil', '04794-000',
+ 'Torre Sul', 'contato@o2filmes.com', '+55 11 3897 6000', 'https://www.o2filmes.com'),
+('Illumination Entertainment', 'Illumination Entertainment LLC', '55443322000144',
+ '1800 Broadway Street', '1800', 'Santa Monica', 'Los Angeles', 'CA', 'Estados Unidos', '90404-000',
+ 'Próximo à Universal Studios', 'info@illumination.com', '+1 310 555 5678', 'https://www.illumination.com'),
+('Laika Studios', 'Laika Entertainment LLC', '66554433000177',
+ '1400 NW Front Ave', '1400', 'Pearl District', 'Portland', 'OR', 'Estados Unidos', '97209-000',
+ 'Estúdio de stop motion', 'info@laika.com', '+1 503 555 4444', 'https://www.laika.com');
+select estudio_id from tbl_estudio order by estudio_id desc limit 1;
+
+CREATE TABLE tbl_filme_genero (
+	id			INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    filme_id	INT NOT NULL,
+    genero_id   INT NOT NULL,
+    
+    CONSTRAINT FK_FILME_FILME_GENERO 	# Nome da relação
+    FOREIGN KEY (filme_id) 				# Qual a chave estrangeira
+    REFERENCES tbl_filme(filme_id),		# De onde vem a FK
+    
+	CONSTRAINT FK_GENERO_FILME_GENERO 
+    FOREIGN KEY (genero_id) 
+    REFERENCES tbl_genero(genero_id)
+);
