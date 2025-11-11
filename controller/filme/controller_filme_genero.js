@@ -8,8 +8,6 @@
 
 //Import do arquivo DAO para manipular o CRUD no BD
 const filmeGeneroDAO = require('../../model/DAO/filme_genero.js')
-const { listarGeneros } = require('../genero/controller_genero.js')
-
 //Import do arquivo que padroniza todas as mensagens
 const MESSAGE_DEFAULT = require('../modulo/config_messages.js')
 
@@ -78,7 +76,7 @@ const buscarFilmeGeneroId = async function (id) {
 
 }
 //Retorna gêneros filtrando pelo ID do filme
-const listarGenerosIdFilm = async function (idFilme) {
+const listarGenerosIdFilme = async function (idFilme) {
 
     //Realizanodo uma cópia do objeto MESSAGE_DEFAULT, permitindo que as alterações desta função
     //não interfiram em outras funções
@@ -104,6 +102,7 @@ const listarGenerosIdFilm = async function (idFilme) {
                 return MESSAGE.ERROR_INTERNAL_SERVER_MODEL //500
             }
         } else {
+
             MESSAGE.ERROR_REQUIRED_FIELDS.invalid_field = 'Atributo [ID_FILME] inválido !!!'
             return MESSAGE.ERROR_REQUIRED_FIELDS //400
         }
@@ -280,11 +279,11 @@ const excluirFilmeGenero = async function (id) {
 module.exports = {
     listarFilmesGeneros,
     listarFilmeIdGenero,
-    listarGenerosIdFilm,
+    listarGenerosIdFilme,
     buscarFilmeGeneroId,
     inserirFilmeGenero,
     atualizarFilmeGenero,
-    excluirFilmeGenero  
+    excluirFilmeGenero
 }
 //Validação dos dados de cadastros do FilmeGenero
 const validarDadosFilmesGeneros = async function (filmeGenero) {

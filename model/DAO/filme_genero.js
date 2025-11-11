@@ -60,7 +60,7 @@ const getSelectLastID = async function () {
 
         //Validação para identificar se o retorno do BD é uma ARRAY (vazio ou com dados)
         if (Array.isArray(result))
-            return Number(result[0].genero_id)
+            return Number(result[0].id)
         else
             return false
 
@@ -167,7 +167,7 @@ const setInsertFilmsGenres = async function (filmeGenero) {
     try {
         
         // Script SQL
-        let sql = `INSERT INTO tbl_filme_genero (id_filme, id_genero)
+        let sql = `INSERT INTO tbl_filme_genero (filme_id, genero_id)
         VALUES (${filmeGenero.filme_id}, ${filmeGenero.genero_id});`
         
         // Por variavel é Unsafe
