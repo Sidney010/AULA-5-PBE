@@ -194,11 +194,23 @@ const atualizarFilme = async function (filme, id, contentType) {
                     let result = await filmeDAO.setUpdateFilms(filme)
 
                     if (result) {
+
+                        for (genero of filme.genero) {
+                            let filmeGenero = {
+                                filme_id: filme.id,
+                                genero_id: genero.id
+                            }
+                            let resultFilmeGenero = await controllerFilmeGenero.inserirFilmeGenero(filmeGenero, contentType)
+ 
+                            if (resultFilmeGenero.status_code != 201) {
+                                return MESSAGE.ERROR_RELATION_TABLE // 200, porém com problemas na tabela de relação
+                            }
+                        }
+
                         MESSAGE.HEADER.status = MESSAGE.SUCESS_UPDATED_ITEM.status
                         MESSAGE.HEADER.status_code = MESSAGE.SUCESS_UPDATED_ITEM.status_code
                         MESSAGE.HEADER.message = MESSAGE.SUCESS_UPDATED_ITEM.message
                         MESSAGE.HEADER.response = filme
-
                         return MESSAGE.HEADER //200
                     } else {
                         return MESSAGE.ERROR_INTERNAL_SERVER_MODEL //500

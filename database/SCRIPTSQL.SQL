@@ -85,8 +85,17 @@ CREATE TABLE tbl_genero (
 	descricao TEXT NOT NULL
 );
 INSERT INTO tbl_genero (nome, descricao)
-        VALUES ('Ficção Científica', 'Busca explorar o impacto da ciência e da tecnologia (real ou imaginária) na sociedade ou nos indivíduos, muitas vezes ambientado em futuros especulativos ou universos paralelos');
-        
+        VALUES ('Ficção Científica', 'Busca explorar o impacto da ciência e da tecnologia (real ou imaginária) na sociedade ou nos indivíduos, muitas vezes ambientado em futuros especulativos ou universos paralelos'),
+    ('Ação', 'Focado em cenas de movimento intenso, combates e perseguições, destacando coragem, força e adrenalina.'),
+    ('Aventura', 'Explora jornadas e descobertas em locais exóticos, com protagonistas em busca de algo maior, seja um tesouro ou autoconhecimento.'),
+    ('Drama', 'Enfatiza o desenvolvimento emocional e moral dos personagens, explorando conflitos pessoais e sociais.'),
+    ('Comédia', 'Tem como objetivo provocar o riso por meio de situações engraçadas, ironias ou sátiras do cotidiano.'),
+    ('Terror', 'Destinado a causar medo, suspense e tensão, explorando o desconhecido, o sobrenatural ou o psicológico.'),
+    ('Romance', 'Focado em relacionamentos amorosos, emoções e dilemas afetivos, comumente explorando temas de paixão e perda.'),
+    ('Fantasia', 'Ambientado em mundos imaginários, com elementos mágicos, criaturas míticas e heróis épicos.'),
+    ('Documentário', 'Baseado em fatos reais, busca retratar a realidade com profundidade, informando e refletindo sobre temas sociais, culturais ou históricos.'),
+    ('Suspense', 'Constrói tensão e mistério, mantendo o espectador intrigado até a revelação final de um segredo ou crime.'),
+    ('Animação', 'Gênero que utiliza técnicas de animação para contar histórias, podendo abranger desde temas infantis até narrativas complexas para adultos.');     
 UPDATE tbl_genero SET 
         nome                  =   'Ficção Científica',  
         descricao             =   'Busca explorar o impacto da ciência e da tecnologia (real ou imaginária) na sociedade ou nos indivíduos, muitas vezes ambientado em futuros especulativos ou universos paralelos' 
@@ -203,3 +212,24 @@ CREATE TABLE tbl_filme_genero (
     FOREIGN KEY (genero_id) 
     REFERENCES tbl_genero(genero_id)
 );
+
+--Trigger que deleta um filme, e tambem exlui ele na tabela relacionamento
+DELIMITER $$
+CREATE TRIGGER trg_quebrar_contraint_deletar_filme_delete
+BEFORE DELETE ON tbl_filme
+FOR EACH ROW
+BEGIN
+	DELETE FROM tbl_filme_genero WHERE filme_id = OLD.filme_id;
+END $$
+DELIMITER ;
+
+
+--Trigger que atualiza um filmeGenero, e tambem conforme a atualização na tabela filme
+DELIMITER $$
+CREATE TRIGGER trg__atualizar_filme_genero_update
+BEFORE UPDATE ON tbl_filme
+FOR EACH ROW
+BEGIN
+	DELETE FROM tbl_filme_genero WHERE filme_id = OLD.filme_id;
+END $$
+DELIMITER ;
