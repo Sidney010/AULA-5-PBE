@@ -199,6 +199,30 @@ INSERT INTO tbl_estudio (
  'Estúdio de stop motion', 'info@laika.com', '+1 503 555 4444', 'https://www.laika.com');
 select estudio_id from tbl_estudio order by estudio_id desc limit 1;
 
+CREATE TABLE tbl_ator (
+	ator_id INT PRIMARY KEY AUTO_INCREMENT,
+	nome VARCHAR(100) NOT NULL,
+	data_nascimento DATE NOT NULL,
+	data_falecimento DATE,
+    altura DECIMAL(3,2) NOT NULL,
+	conjuge VARCHAR(200) NULL,   
+    filhos TEXT,
+    biografia TEXT
+);
+
+INSERT INTO tbl_ator (nome, data_nascimento, data_falecimento, altura, conjuge, filhos, biografia)
+VALUES
+('Leonardo DiCaprio', '1974-11-11', NULL, 1.83, NULL, NULL, 'Ator norte-americano conhecido por papéis em filmes como Titanic, A Origem e O Regresso. Ganhou o Oscar de Melhor Ator em 2016.'),
+('Scarlett Johansson', '1984-11-22', NULL, 1.60, 'Colin Jost', 'Rose Dorothy Dauriac, Cosmo Jost', 'Atriz e cantora norte-americana, famosa por interpretar a Viúva Negra no Universo Marvel.'),
+('Morgan Freeman', '1937-06-01', NULL, 1.88, 'Myrna Colley-Lee (divorciado)', '4 filhos', 'Ator e narrador americano, conhecido por sua voz marcante e papéis em filmes como Um Sonho de Liberdade e Seven.'),
+('Emma Watson', '1990-04-15', NULL, 1.65, NULL, NULL, 'Atriz britânica reconhecida por interpretar Hermione Granger na série Harry Potter e por seu ativismo feminista.'),
+('Robert Downey Jr.', '1965-04-04', NULL, 1.74, 'Susan Downey', 'Indio Falconer Downey, Exton Elias Downey, Avri Roel Downey', 'Ator norte-americano que alcançou fama mundial como Tony Stark/Homem de Ferro no Universo Cinematográfico da Marvel.'),
+('Tom Hanks', '1956-07-09', NULL, 1.83, 'Rita Wilson', 'Colin Hanks, Elizabeth Hanks, Chet Hanks, Truman Hanks', 'Ator e cineasta americano, conhecido por Forrest Gump, Náufrago e O Resgate do Soldado Ryan.'),
+('Natalie Portman', '1981-06-09', NULL, 1.60, 'Benjamin Millepied', 'Aleph Millepied, Amalia Millepied', 'Atriz israelense-americana vencedora do Oscar por Cisne Negro e conhecida também por V de Vingança e Star Wars.'),
+('Heath Ledger', '1979-04-04', '2008-01-22', 1.85, 'Michelle Williams (ex-companheira)', 'Matilda Ledger', 'Ator australiano que se destacou por papéis intensos, especialmente como Coringa em O Cavaleiro das Trevas, pelo qual recebeu um Oscar póstumo.'),
+('Angelina Jolie', '1975-06-04', NULL, 1.69, 'Brad Pitt (divorciada)', '6 filhos', 'Atriz, diretora e ativista humanitária americana, conhecida por Sr. & Sra. Smith e Malévola.'),
+('Keanu Reeves', '1964-09-02', NULL, 1.86, NULL, NULL, 'Ator canadense conhecido por Matrix e John Wick, admirado por sua humildade e discrição.');
+
 CREATE TABLE tbl_filme_genero (
 	id			INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     filme_id	INT NOT NULL,
