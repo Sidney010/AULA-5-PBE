@@ -48,6 +48,9 @@ const classificacaoEtariaRoutes = require('./routes/classificacao_etaria/routes_
 //Importar o arquivo das rotas da nacionalidade
 const nacionalidadeRoutes = require('./routes/nacionalidade/routes_nacionalidade.js')
 
+//Importar o arquivo das rotas da ator
+const atorRoutes = require('./routes/ator/routes_ator.js')
+
 //************************************************************************************** */
 //                           Configuração     ROUTES
 //Configurando as rotas de filmes
@@ -64,4 +67,7 @@ app.use('/v1/locadora/classificacaoEtaria', cors(), bodyParserJSON, classificaca
 
 //Configurando as rotas de nacionalidade
 app.use('/v1/locadora/nacionalidade', cors(), bodyParserJSON, nacionalidadeRoutes)
+
+//Configurando as rotas de atores
+app.use('/v1/locadora/ator', cors(), bodyParserJSON, atorRoutes)
 
