@@ -1,5 +1,6 @@
-
+CREATE DATABASE db_locadora_filme_ds2T_25_2; 
 USE db_locadora_filme_ds2T_25_2;
+
 CREATE TABLE tbl_filme (
 	filme_id INT PRIMARY KEY AUTO_INCREMENT,
 	nome VARCHAR(100) NOT NULL,
@@ -237,7 +238,56 @@ CREATE TABLE tbl_filme_genero (
     REFERENCES tbl_genero(genero_id)
 );
 
---Trigger que deleta um filme, e tambem exlui ele na tabela relacionamento
+CREATE TABLE tbl_filme_ator (
+	id			INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    filme_id	INT NOT NULL,
+    ator_id   	INT NOT NULL,
+    
+    CONSTRAINT FK_FILME_FILME_ATOR	# Nome da relação
+    FOREIGN KEY (filme_id) 				# Qual a chave estrangeira
+    REFERENCES tbl_filme(filme_id),		# De onde vem a FK
+    
+	CONSTRAINT FK_ATOR_FILME_ATOR 
+    FOREIGN KEY (ator_id) 
+    REFERENCES tbl_ator(ator_id)
+);
+INSERT INTO tbl_filme_ator (filme_id, ator_id) VALUES
+-- Era do Gelo
+(1, 3),
+
+-- Era do Gelo 2
+(2, 3),
+
+-- Shrek
+(3, 9),
+
+-- Toy Story
+(4, 6),
+
+-- Procurando Nemo
+(5, 6),
+
+-- Os Incríveis
+(6, 5),
+(6, 2),
+
+-- Madagascar
+(7, 3),
+
+-- Up
+(8, 6),
+
+-- Meu Malvado Favorito
+(9, 5),
+
+-- Detona Ralph
+(10, 5),
+(10, 2),
+
+-- Frozen
+(11, 4),
+(11, 7);
+-- Trigger que deleta um filme, e tambem exlui ele na tabela relacionamento
 DELIMITER $$
 CREATE TRIGGER trg_quebrar_contraint_deletar_filme_delete
 BEFORE DELETE ON tbl_filme
@@ -255,5 +305,28 @@ BEFORE UPDATE ON tbl_filme
 FOR EACH ROW
 BEGIN
 	DELETE FROM tbl_filme_genero WHERE filme_id = OLD.filme_id;
+END $$
+DELIMITER ;
+
+
+
+-- Trigger que deleta um filme, e tambem exlui ele na tabela relacionamento
+DELIMITER $$
+CREATE TRIGGER trg_quebrar_contraint_deletar_filme_ator_delete
+BEFORE DELETE ON tbl_filme
+FOR EACH ROW
+BEGIN
+	DELETE FROM tbl_filme_ator WHERE filme_id = OLD.filme_id;
+END $$
+DELIMITER ;
+
+
+-- Trigger que atualiza um filmeGenero, e tambem conforme a atualização na tabela filme
+DELIMITER $$
+CREATE TRIGGER trg__atualizar_filme_ator_update
+BEFORE UPDATE ON tbl_filme
+FOR EACH ROW
+BEGIN
+	DELETE FROM tbl_filme_ator WHERE filme_id = OLD.filme_id;
 END $$
 DELIMITER ;

@@ -1,5 +1,5 @@
 /*********************************************************************************************************************
- * Objetivo: Arquivo responsável pela realização do CRUD de dados no Banco de Dados MySQL relacionamento da tabela filme e genero
+ * Objetivo: Arquivo responsável pela realização do CRUD de dados no Banco de Dados MySQL relacionamento da tabela filme e ator
  * Data: 5/11/2025
  * Autor: Sidney
  * Versão: 1.0
@@ -12,8 +12,8 @@ const { PrismaClient } = require('../../generated/prisma')
 //Cria um objeto do prisma client para manipular os scripts SQL
 const prisma = new PrismaClient()
 
-//Retorna todos os filmes e generos de filme do banco de dados
-const getSelectAllFilmsGenres = async function () {
+//Retorna todos os filmes e atores de filme do banco de dados
+const getSelectAllFilmsActors = async function () {
 
     try {
 
@@ -24,7 +24,7 @@ const getSelectAllFilmsGenres = async function () {
 
 
         //Script SQL
-        let sql = `select * from tbl_filme_genero order by id desc;`
+        let sql = `select * from tbl_filme_ator order by id desc;`
 
         //Executa no BD o script SQL
         let result = await prisma.$queryRawUnsafe(sql)
@@ -53,7 +53,7 @@ const getSelectLastID = async function () {
 
 
         //Script SQL
-        let sql = `select id from tbl_filme_genero order by id desc limit 1;`
+        let sql = `select id from tbl_filme_ator order by id desc limit 1;`
 
         //Executa no BD o script SQL
         let result = await prisma.$queryRawUnsafe(sql)
@@ -70,8 +70,8 @@ const getSelectLastID = async function () {
 
     }
 }
-//Retorna um filme e genero filtrando pelo ID do banco de dados
-const getSelectByIdFilmsGenres = async function (id) {
+//Retorna um filme e ator filtrando pelo ID do banco de dados
+const getSelectByIdFilmsActors = async function (id) {
     
     try {
 
@@ -82,7 +82,7 @@ const getSelectByIdFilmsGenres = async function (id) {
 
 
         //Script SQL
-        let sql = `select * from tbl_filme_genero where id=${id};`
+        let sql = `select * from tbl_filme_ator where id=${id};`
 
         //Executa no BD o script SQL
         let result = await prisma.$queryRawUnsafe(sql)
@@ -100,18 +100,18 @@ const getSelectByIdFilmsGenres = async function (id) {
     }
 
 }
-//Retorna generos filtrando pelo ID do filme do banco de dados
-const getSelectGenresByIdFilm = async function (idFilme) {
+//Retorna atores filtrando pelo ID do filme do banco de dados
+const getSelectActorByIdFilm = async function (idFilme) {
     
     try {
 
         //Script SQL
-        let sql = `select tbl_genero.genero_id, tbl_genero.nome
+        let sql = `select tbl_ator.ator_id, tbl_ator.nome
                      from tbl_filme
-                        inner join tbl_filme_genero
-                            on tbl_filme.filme_id = tbl_filme_genero.filme_id
-                        inner join tbl_genero
-                            on tbl_genero.genero_id = tbl_filme_genero.genero_id
+                        inner join tbl_filme_ator
+                            on tbl_filme.filme_id = tbl_filme_ator.filme_id
+                        inner join tbl_ator
+                            on tbl_ator.ator_id = tbl_filme_ator.ator_id
                     where tbl_filme.filme_id=${idFilme};`
 
         //Executa no BD o script SQL
@@ -131,19 +131,19 @@ const getSelectGenresByIdFilm = async function (idFilme) {
 
 }
 
-// //Retorna filmes filtrando pelo ID do genero do banco de dados
-const getSelectFilmsByIdGenre = async function (idGenero) {
+// //Retorna filmes filtrando pelo ID do ator do banco de dados
+const getSelectFilmsByIdAtor = async function (idAtor) {
     
     try {
 
         //Script SQL
         let sql = `select tbl_filme.filme_id, tbl_filme.nome
                      from tbl_filme
-                        inner join tbl_filme_genero
-                            on tbl_filme.filme_id = tbl_filme_genero.filme_id
-                        inner join tbl_genero
-                            on tbl_genero.genero_id = tbl_filme_genero.genero_id
-                    where tbl_genero.genero_id=${idGenero};`
+                        inner join tbl_filme_ator
+                            on tbl_filme.filme_id = tbl_filme_ator.filme_id
+                        inner join tbl_ator
+                            on tbl_ator.ator_id = tbl_filme_ator.ator_id
+                    where tbl_ator.ator_id=${idAtor};`
 
         //Executa no BD o script SQL
         let result = await prisma.$queryRawUnsafe(sql)
@@ -162,13 +162,13 @@ const getSelectFilmsByIdGenre = async function (idGenero) {
 
 }
 
-//Insere um genero no banco de dados
-const setInsertFilmsGenres = async function (filmeGenero) {
+//Insere um ator no banco de dados
+const setInsertFilmsActor = async function (filmeAtor) {
     try {
         
         // Script SQL
-        let sql = `INSERT INTO tbl_filme_genero (filme_id, genero_id)
-        VALUES (${filmeGenero.filme_id}, ${filmeGenero.genero_id});`
+        let sql = `INSERT INTO tbl_filme_ator (filme_id, ator_id)
+        VALUES (${filmeAtor.filme_id}, ${filmeAtor.ator_id});`
         
         // Por variavel é Unsafe
         // $executeRawUnsafe () -> Permite apenas executar scripsts SQL que não tem retorno de dados (INSERT, UPDATE, DELETE)
@@ -185,14 +185,14 @@ const setInsertFilmsGenres = async function (filmeGenero) {
 
 }
 //Atualiza um elemento existente no banco de dados filtrando pelo ID
-const setUpdateFilmsGenres = async function (filmeGenero) {
+const setUpdateFilmsActor = async function (filmeAtor) {
     try {
         
         // Script SQL
-        let sql = `UPDATE tbl_filme_genero SET 
-        filme_id              =   ${filmeGenero.filme_id},  
-        genero_id             =   ${filmeGenero.genero_id},
-        where  id             =   ${filmeGenero.id};`
+        let sql = `UPDATE tbl_filme_ator SET 
+        filme_id              =   ${filmeAtor.filme_id},  
+        ator_id             =   ${filmeAtor.ator_id},
+        where  id             =   ${filmeAtor.id};`
         
         // Por variavel é Unsafe
         // $executeRawUnsafe () -> Permite apenas executar scripsts SQL que não tem retorno de dados (INSERT, UPDATE, DELETE)
@@ -209,11 +209,11 @@ const setUpdateFilmsGenres = async function (filmeGenero) {
 
 }
 //Apaga um elemento existente no banco de dados filtrando pelo ID
-const setDeleteFilmsGenres = async function (id) {
+const setDeleteFilmsActor = async function (id) {
     try {
         
         // Script SQL
-        let sql = `DELETE FROM tbl_filme_genero where id = ${id};`
+        let sql = `DELETE FROM tbl_filme_ator where id = ${id};`
         
         // Por variavel é Unsafe
         // $executeRawUnsafe () -> Permite apenas executar scripsts SQL que não tem retorno de dados (INSERT, UPDATE, DELETE)
@@ -231,12 +231,12 @@ const setDeleteFilmsGenres = async function (id) {
 }
 
 module.exports = {
-    getSelectAllFilmsGenres,
-    getSelectByIdFilmsGenres,
+    getSelectAllFilmsActors,
+    getSelectByIdFilmsActors,
+    getSelectActorByIdFilm,
+    getSelectFilmsByIdAtor,
     getSelectLastID,
-    getSelectFilmsByIdGenre,
-    getSelectGenresByIdFilm,
-    setInsertFilmsGenres,
-    setUpdateFilmsGenres,
-    setDeleteFilmsGenres
+    setInsertFilmsActor,
+    setUpdateFilmsActor,
+    setDeleteFilmsActor
 }

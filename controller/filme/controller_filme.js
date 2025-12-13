@@ -11,6 +11,8 @@ const filmeDAO = require('../../model/DAO/filme.js')
 
 //Import da controller filmeGenero (tabela de relação)
 const controllerFilmeGenero = require('./controller_filme_genero.js')
+//Import da controller filmeAtor
+const controllerFilmeAtor = require('./controller_filme_ator.js')
 
 //Import do arquivo que padroniza todas as mensagens
 const MESSAGE_DEFAULT = require('../modulo/config_messages.js')
@@ -34,15 +36,17 @@ const listarFilmes = async function () {
                 // Processamento para adicionar os gneros em cada filme 
                 for (filme of result) {
                     let resultGeneros = await controllerFilmeGenero.listarGenerosIdFilme(filme.filme_id)
-
-                    if (resultGeneros.status_code == 200){
+                    if (resultGeneros.status_code == 200) {
                         filme.genero = resultGeneros.response.film_genre
-                    } 
+                    }
+
+                    let resultAtores = await controllerFilmeAtor.listarAtoresIdFilme(filme.filme_id)
+                    if (resultAtores.status_code == 200) filme.ator = resultAtores.response.film_actor
                 }
 
-                MESSAGE.HEADER.status           = MESSAGE.SUCESS_REQUEST.status
-                MESSAGE.HEADER.status_code      = MESSAGE.SUCESS_REQUEST.status_code
-                MESSAGE.HEADER.response.films   = result
+                MESSAGE.HEADER.status = MESSAGE.SUCESS_REQUEST.status
+                MESSAGE.HEADER.status_code = MESSAGE.SUCESS_REQUEST.status_code
+                MESSAGE.HEADER.response.films = result
 
                 return MESSAGE.HEADER //200
 
@@ -50,7 +54,7 @@ const listarFilmes = async function () {
                 return MESSAGE.ERROR_NOT_FOUND //404
             }
         } else {
-            
+
             return MESSAGE.ERROR_INTERNAL_SERVER_MODEL //500
         }
 
@@ -128,7 +132,16 @@ const inserirFilme = async function (filme, contentType) {
                                 return MESSAGE.ERROR_RELATION_TABLE // 200, porém com problemas na tabela de relação
                             }
                         }
-
+                        for (ator of filme.ator) {
+                            let filmeAtor = {
+                                filme_id: lastIdFilme,
+                                ator_id: ator.id
+                            }
+                            let resultFilmeAtor = await controllerFilmeAtor.inserirFilmeAtor(filmeAtor, contentType)
+                            if (resultFilmeAtor.status_code != 201) {
+                                return MESSAGE.ERROR_RELATION_TABLE // 200, porém com problemas na tabela de relação
+                            }
+                        }
 
 
                         //Adiciona no JSON de filme o ID que foi gerado pelo BD
@@ -141,12 +154,20 @@ const inserirFilme = async function (filme, contentType) {
 
                         //Apaga o atributo genero que chegou no POST apenas com IDs
                         delete filme.genero
+                        delete filme.ator
 
                         //Pesquisa no BD quais os generos e os seus dados que foram inseridos na tabela de relação
                         let resultGenerosFilme = await controllerFilmeGenero.listarGenerosIdFilme(lastIdFilme)
 
                         //Adiciona novamente o atributo genero com todas as informações do genero (ID, Nome)
                         filme.genero = resultGenerosFilme.response.film_genre
+
+
+                        //Pesquisa no BD quais os atores e os seus dados que foram inseridos na tabela de relação
+                        let resultAtoresFilme = await controllerFilmeAtor.listarAtoresIdFilme(lastIdFilme)
+
+                        //Adiciona novamente o atributo ator com todas as informações do genero (ID, Nome)
+                        filme.ator = resultAtoresFilme.response.film_actor
 
                         MESSAGE.HEADER.response = filme
 
@@ -201,8 +222,18 @@ const atualizarFilme = async function (filme, id, contentType) {
                                 genero_id: genero.id
                             }
                             let resultFilmeGenero = await controllerFilmeGenero.inserirFilmeGenero(filmeGenero, contentType)
- 
+
                             if (resultFilmeGenero.status_code != 201) {
+                                return MESSAGE.ERROR_RELATION_TABLE // 200, porém com problemas na tabela de relação
+                            }
+                        }
+                        for (ator of filme.ator) {
+                            let filmeAtor = {
+                                filme_id: lastIdFilme,
+                                ator_id: ator.id
+                            }
+                            let resultFilmeAtor = await controllerFilmeAtor.inserirFilmeAtor(filmeAtor, contentType)
+                            if (resultFilmeAtor.status_code != 201) {
                                 return MESSAGE.ERROR_RELATION_TABLE // 200, porém com problemas na tabela de relação
                             }
                         }
