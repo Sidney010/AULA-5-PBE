@@ -283,7 +283,7 @@ const atualizarFilme = async function (filme, id, contentType) {
                         }
                         for (ator of filme.ator) {
                             let filmeAtor = {
-                                filme_id: lastIdFilme,
+                                filme_id: filme.id,
                                 ator_id: ator.id
                             }
                             let resultFilmeAtor = await controllerFilmeAtor.inserirFilmeAtor(filmeAtor, contentType)
@@ -293,7 +293,7 @@ const atualizarFilme = async function (filme, id, contentType) {
                         }
                         for (estudio of filme.estudio) {
                             let filmeEstudio = {
-                                filme_id: lastIdFilme,
+                                filme_id: filme.id,
                                 estudio_id: estudio.id
                             }
                             let resultFilmeEstudio = await controllerFilmeEstudio.inserirFilmeEstudio(filmeEstudio, contentType)
@@ -320,6 +320,7 @@ const atualizarFilme = async function (filme, id, contentType) {
             return MESSAGE.ERROR_CONTENT_TYPE //415
         }
     } catch (error) {
+        console.log(error)
         return MESSAGE.ERROR_INTERNAL_SERVER_CONTROLLER //500
     }
 
