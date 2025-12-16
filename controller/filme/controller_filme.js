@@ -13,6 +13,10 @@ const filmeDAO = require('../../model/DAO/filme.js')
 const controllerFilmeGenero = require('./controller_filme_genero.js')
 //Import da controller filmeAtor
 const controllerFilmeAtor = require('./controller_filme_ator.js')
+//Import da controller filmeEstudio
+const controllerFilmeEstudio = require('./controller_filme_estudio.js')
+//Import da controller filmeAtor
+const controllerClassificacaoEtaria = require('../classificacao_etaria/controller_classificacao_etaria.js')
 
 //Import do arquivo que padroniza todas as mensagens
 const MESSAGE_DEFAULT = require('../modulo/config_messages.js')
@@ -35,13 +39,25 @@ const listarFilmes = async function () {
                 // let arrayFilmes = []
                 // Processamento para adicionar os gneros em cada filme 
                 for (filme of result) {
+
+                    // Buscar Atores
                     let resultGeneros = await controllerFilmeGenero.listarGenerosIdFilme(filme.filme_id)
                     if (resultGeneros.status_code == 200) {
                         filme.genero = resultGeneros.response.film_genre
                     }
 
+                    // Buscar Atores
                     let resultAtores = await controllerFilmeAtor.listarAtoresIdFilme(filme.filme_id)
                     if (resultAtores.status_code == 200) filme.ator = resultAtores.response.film_actor
+
+                    // Buscar Estudio
+                    let resultEstudio = await controllerFilmeEstudio.listarEstudiosIdFilme(filme.filme_id)
+                    if (resultEstudio.status_code == 200) filme.estudio = resultEstudio.response.film_studio
+
+
+                    // Buscar Classficação Etária
+                    let resultClassificacaoEtaria = await controllerClassificacaoEtaria.buscarClassificacaoEtariaId(filme.classificacao_etaria_id)
+                    if (resultClassificacaoEtaria.status_code == 200) filme.classificacao_etaria = resultClassificacaoEtaria.response.ageRating
                 }
 
                 MESSAGE.HEADER.status = MESSAGE.SUCESS_REQUEST.status
@@ -78,6 +94,25 @@ const buscarFilmeId = async function (id) {
 
             if (result) {
                 if (result.length > 0) {
+                    for (filme of result) {
+                        let resultGeneros = await controllerFilmeGenero.listarGenerosIdFilme(filme.filme_id)
+                        if (resultGeneros.status_code == 200) {
+                            filme.genero = resultGeneros.response.film_genre
+                        }
+
+                        // Buscar Estudio
+                        let resultEstudio = await controllerFilmeEstudio.listarEstudiosIdFilme(filme.filme_id)
+                        if (resultEstudio.status_code == 200) filme.estudio = resultEstudio.response.film_studio
+
+                        let resultAtores = await controllerFilmeAtor.listarAtoresIdFilme(filme.filme_id)
+                        if (resultAtores.status_code == 200) filme.ator = resultAtores.response.film_actor
+
+                    }
+
+                    let resultClassificacaoEtaria = await controllerClassificacaoEtaria.buscarClassificacaoEtariaId(filme.classificacao_etaria_id)
+                    if (resultClassificacaoEtaria.status_code == 200) filme.classificacao_etaria = resultClassificacaoEtaria.response.ageRating
+
+
                     MESSAGE.HEADER.status = MESSAGE.SUCESS_REQUEST.status
                     MESSAGE.HEADER.status_code = MESSAGE.SUCESS_REQUEST.status_code
                     MESSAGE.HEADER.response.film = result
@@ -142,7 +177,16 @@ const inserirFilme = async function (filme, contentType) {
                                 return MESSAGE.ERROR_RELATION_TABLE // 200, porém com problemas na tabela de relação
                             }
                         }
-
+                        for (estudio of filme.estudio) {
+                            let filmeEstudio = {
+                                filme_id: lastIdFilme,
+                                estudio_id: estudio.id
+                            }
+                            let resultFilmeEstudio = await controllerFilmeEstudio.inserirFilmeEstudio(filmeEstudio, contentType)
+                            if (resultFilmeEstudio.status_code != 201) {
+                                return MESSAGE.ERROR_RELATION_TABLE // 200, porém com problemas na tabela de relação
+                            }
+                        }
 
                         //Adiciona no JSON de filme o ID que foi gerado pelo BD
                         filme.id = lastIdFilme
@@ -155,6 +199,10 @@ const inserirFilme = async function (filme, contentType) {
                         //Apaga o atributo genero que chegou no POST apenas com IDs
                         delete filme.genero
                         delete filme.ator
+                        delete filme.estudio
+
+                        let resultClassificacaoEtaria = await controllerClassificacaoEtaria.buscarClassificacaoEtariaId(filme.classificacao_etaria_id)
+                        if (resultClassificacaoEtaria.status_code == 200) filme.classificacao_etaria = resultClassificacaoEtaria.response.ageRating
 
                         //Pesquisa no BD quais os generos e os seus dados que foram inseridos na tabela de relação
                         let resultGenerosFilme = await controllerFilmeGenero.listarGenerosIdFilme(lastIdFilme)
@@ -168,6 +216,12 @@ const inserirFilme = async function (filme, contentType) {
 
                         //Adiciona novamente o atributo ator com todas as informações do genero (ID, Nome)
                         filme.ator = resultAtoresFilme.response.film_actor
+
+                        //Pesquisa no BD quais os atores e os seus dados que foram inseridos na tabela de relação
+                        let resultEstudiosFilme = await controllerFilmeEstudio.listarEstudiosIdFilme(lastIdFilme)
+
+                        //Adiciona novamente o atributo ator com todas as informações do genero (ID, Nome)
+                        filme.ator = resultEstudiosFilme.response.film_studio
 
                         MESSAGE.HEADER.response = filme
 
@@ -237,7 +291,16 @@ const atualizarFilme = async function (filme, id, contentType) {
                                 return MESSAGE.ERROR_RELATION_TABLE // 200, porém com problemas na tabela de relação
                             }
                         }
-
+                        for (estudio of filme.estudio) {
+                            let filmeEstudio = {
+                                filme_id: lastIdFilme,
+                                estudio_id: estudio.id
+                            }
+                            let resultFilmeEstudio = await controllerFilmeEstudio.inserirFilmeEstudio(filmeEstudio, contentType)
+                            if (resultFilmeEstudio.status_code != 201) {
+                                return MESSAGE.ERROR_RELATION_TABLE // 200, porém com problemas na tabela de relação
+                            }
+                        }
                         MESSAGE.HEADER.status = MESSAGE.SUCESS_UPDATED_ITEM.status
                         MESSAGE.HEADER.status_code = MESSAGE.SUCESS_UPDATED_ITEM.status_code
                         MESSAGE.HEADER.message = MESSAGE.SUCESS_UPDATED_ITEM.message
@@ -307,6 +370,7 @@ module.exports = {
 const validarDadosFilmes = async function (filme) {
 
     let MESSAGE = JSON.parse(JSON.stringify(MESSAGE_DEFAULT))
+    let resultClassificacaoEtaria = await controllerClassificacaoEtaria.buscarClassificacaoEtariaId(filme.classificacao_etaria_id)
 
     if (filme.nome == '' || filme.nome == null || filme.nome == undefined || filme.nome.length > 100) {
         MESSAGE.ERROR_REQUIRED_FIELDS.invalid_field = 'Atributo [NOME] inválido !!!'
@@ -335,6 +399,14 @@ const validarDadosFilmes = async function (filme) {
     } else if (filme.capa == '' || filme.capa == null || filme.capa == undefined || filme.capa.length > 200) {
         MESSAGE.ERROR_REQUIRED_FIELDS.invalid_field = 'Atributo [CAPA] inválido !!!'
         return MESSAGE.ERROR_REQUIRED_FIELDS //400
+
+    } else if (filme.classificacao_etaria_id == '' || filme.classificacao_etaria_id == null || isNaN(filme.classificacao_etaria_id) || filme.classificacao_etaria_id <= 0) {
+        MESSAGE.ERROR_REQUIRED_FIELDS.invalid_field = 'Atributo [CLASSIFICACAO_ETARIA_ID] inválido!!!'
+        return MESSAGE.ERROR_REQUIRED_FIELDS
+
+    }   else if (resultClassificacaoEtaria.status_code != 200) {
+        MESSAGE.ERROR_REQUIRED_FIELDS.invalid_field = 'Atributo [CLASSIFICACAO_ETARIA_ID] inválido!!!'
+        return MESSAGE.ERROR_REQUIRED_FIELDS
 
     } else {
         return false

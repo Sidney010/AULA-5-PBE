@@ -1,0 +1,966 @@
+openapi: 3.0.3
+info:
+  title: API Locadora de Filmes - SENAI Jandira 
+  description: |-
+    API destinada ao controle de dados de um sistema de Locadora de Filmes.
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: sidneyc.aragao@email.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: http://localhost:8080/
+paths:
+  /v1/locadora/nacionalidade:
+    post:
+      tags:
+        - Nacionalidade
+      summary: Adiciona uma nova Nacionalidade
+      description: Adiciona uma nova nacionalidade para atores.
+      requestBody:
+        $ref: '#/components/requestBodies/Nacionalidade'
+      responses:
+        '201':
+          description: Nacionalidade adicionada com sucesso
+        '400':
+          description: Entrada invalida
+    get:
+      tags:
+        - Nacionalidade
+      summary: Lista todas as Nacionalidades
+      description: Retorna uma lista de todas as nacionalidades registradas.
+      responses:
+        '200':
+          description: Operacao bem-sucedida
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Nacionalidade'    
+        '404':
+          description: Nao Encontrado
+  /v1/locadora/nacionalidade/{id_nacionalidade}:
+    get:
+      tags:
+        - Nacionalidade
+      summary: Busca uma Nacionalidade pelo ID
+      description: Retorna uma nacionalidade pelo seu ID.
+      parameters:
+        - name: id_nacionalidade
+          in: path
+          description: ID da nacionalidade a ser retornada
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Operacao bem-sucedida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Nacionalidade'    
+        '400':
+          description: ID fornecido invalido
+        '404':
+          description: Nacionalidade nao encontrada
+    put:
+      tags:
+        - Nacionalidade
+      summary: Atualiza uma Nacionalidade existente
+      description: Atualiza uma nacionalidade existente pelo seu ID.
+      parameters:
+        - name: id_nacionalidade
+          in: path
+          description: ID da nacionalidade a ser atualizada
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        $ref: '#/components/requestBodies/Nacionalidade'
+      responses:
+        '200':
+          description: Operacao bem-sucedida
+        '400':
+          description: ID fornecido invalido ou entrada invalida
+        '404':
+          description: Nacionalidade nao encontrada
+    delete:
+      tags:
+        - Nacionalidade
+      summary: Exclui uma Nacionalidade
+      description: Exclui uma nacionalidade pelo seu ID.
+      parameters:
+        - name: id_nacionalidade
+          in: path
+          description: ID da nacionalidade a ser excluida
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Operacao bem-sucedida
+        '400':
+          description: ID fornecido invalido
+        '404':
+          description: Nacionalidade nao encontrada
+  
+  /v1/locadora/genero:
+    post:
+      tags:
+        - Genero
+      summary: Adiciona um novo Genero
+      description: Adiciona um novo genero para filmes.
+      requestBody:
+        $ref: '#/components/requestBodies/Genero'
+      responses:
+        '201':
+          description: Genero adicionado com sucesso
+        '400':
+          description: Entrada invalida
+    get:
+      tags:
+        - Genero
+      summary: Lista todos os Generos
+      description: Retorna uma lista de todos os generos registrados.
+      responses:
+        '200':
+          description: Operacao bem-sucedida
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Genero'    
+        '404':
+          description: Nao Encontrado
+  /v1/locadora/genero/{id_genero}:
+    get:
+      tags:
+        - Genero
+      summary: Busca um Genero pelo ID
+      description: Retorna um genero pelo seu ID.
+      parameters:
+        - name: id_genero
+          in: path
+          description: ID do genero a ser retornado
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Operacao bem-sucedida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Genero'    
+        '400':
+          description: ID fornecido invalido
+        '404':
+          description: Genero nao encontrado
+    put:
+      tags:
+        - Genero
+      summary: Atualiza um Genero existente
+      description: Atualiza um genero existente pelo seu ID.
+      parameters:
+        - name: id_genero
+          in: path
+          description: ID do genero a ser atualizado
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        $ref: '#/components/requestBodies/Genero'
+      responses:
+        '200':
+          description: Operacao bem-sucedida
+        '400':
+          description: ID fornecido invalido ou entrada invalida
+        '404':
+          description: Genero nao encontrado
+    delete:
+      tags:
+        - Genero
+      summary: Exclui um Genero
+      description: Exclui um genero pelo seu ID.
+      parameters:
+        - name: id_genero
+          in: path
+          description: ID do genero a ser excluido
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Operacao bem-sucedida
+        '400':
+          description: ID fornecido invalido
+        '404':
+          description: Genero nao encontrado
+
+  /v1/locadora/classificacao_etaria:
+    post:
+      tags:
+        - Classificacao Etaria
+      summary: Adiciona uma nova Classificacao Etaria
+      description: Adiciona uma nova classificacao etaria para filmes.
+      requestBody:
+        $ref: '#/components/requestBodies/ClassificacaoEtaria'
+      responses:
+        '201':
+          description: Classificacao Etaria adicionada com sucesso
+        '400':
+          description: Entrada invalida
+    get:
+      tags:
+        - Classificacao Etaria
+      summary: Lista todas as Classificacoes Etarias
+      description: Retorna uma lista de todas as classificacoes etarias registradas.
+      responses:
+        '200':
+          description: Operacao bem-sucedida
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClassificacaoEtaria'    
+        '404':
+          description: Nao Encontrado
+  /v1/locadora/classificacao_etaria/{id_classificacao_etaria}:
+    get:
+      tags:
+        - Classificacao Etaria
+      summary: Busca uma Classificacao Etaria pelo ID
+      description: Retorna uma classificacao etaria pelo seu ID.
+      parameters:
+        - name: id_classificacao_etaria
+          in: path
+          description: ID da classificacao etaria a ser retornada
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Operacao bem-sucedida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClassificacaoEtaria'    
+        '400':
+          description: ID fornecido invalido
+        '404':
+          description: Classificacao Etaria nao encontrada
+    put:
+      tags:
+        - Classificacao Etaria
+      summary: Atualiza uma Classificacao Etaria existente
+      description: Atualiza uma classificacao etaria existente pelo seu ID.
+      parameters:
+        - name: id_classificacao_etaria
+          in: path
+          description: ID da classificacao etaria a ser atualizada
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        $ref: '#/components/requestBodies/ClassificacaoEtaria'
+      responses:
+        '200':
+          description: Operacao bem-sucedida
+        '400':
+          description: ID fornecido invalido ou entrada invalida
+        '404':
+          description: Classificacao Etaria nao encontrada
+    delete:
+      tags:
+        - Classificacao Etaria
+      summary: Exclui uma Classificacao Etaria
+      description: Exclui uma classificacao etaria pelo seu ID.
+      parameters:
+        - name: id_classificacao_etaria
+          in: path
+          description: ID da classificacao etaria a ser excluida
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Operacao bem-sucedida
+        '400':
+          description: ID fornecido invalido
+        '404':
+          description: Classificacao Etaria nao encontrada
+
+  /v1/locadora/estudio:
+    post:
+      tags:
+        - Estudio
+      summary: Adiciona um novo Estudio
+      description: Adiciona um novo estudio de filmes.
+      requestBody:
+        $ref: '#/components/requestBodies/Estudio'
+      responses:
+        '201':
+          description: Estudio adicionado com sucesso
+        '400':
+          description: Entrada invalida
+    get:
+      tags:
+        - Estudio
+      summary: Lista todos os Estudios
+      description: Retorna uma lista de todos os estudios registrados.
+      responses:
+        '200':
+          description: Operacao bem-sucedida
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Estudio'    
+        '404':
+          description: Nao Encontrado
+  /v1/locadora/estudio/{id_estudio}:
+    get:
+      tags:
+        - Estudio
+      summary: Busca um Estudio pelo ID
+      description: Retorna um estudio pelo seu ID.
+      parameters:
+        - name: id_estudio
+          in: path
+          description: ID do estudio a ser retornado
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Operacao bem-sucedida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Estudio'    
+        '400':
+          description: ID fornecido invalido
+        '404':
+          description: Estudio nao encontrado
+    put:
+      tags:
+        - Estudio
+      summary: Atualiza um Estudio existente
+      description: Atualiza um estudio existente pelo seu ID.
+      parameters:
+        - name: id_estudio
+          in: path
+          description: ID do estudio a ser atualizado
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        $ref: '#/components/requestBodies/Estudio'
+      responses:
+        '200':
+          description: Operacao bem-sucedida
+        '400':
+          description: ID fornecido invalido ou entrada invalida
+        '404':
+          description: Estudio nao encontrado
+    delete:
+      tags:
+        - Estudio
+      summary: Exclui um Estudio
+      description: Exclui um estudio pelo seu ID.
+      parameters:
+        - name: id_estudio
+          in: path
+          description: ID do estudio a ser excluido
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Operacao bem-sucedida
+        '400':
+          description: ID fornecido invalido
+        '404':
+          description: Estudio nao encontrado
+
+  /v1/locadora/ator:
+    post:
+      tags:
+        - Ator
+      summary: Adiciona um novo Ator
+      description: Adiciona um novo ator ao catalogo.
+      requestBody:
+        $ref: '#/components/requestBodies/Ator'
+      responses:
+        '201':
+          description: Ator adicionado com sucesso
+        '400':
+          description: Entrada invalida
+    get:
+      tags:
+        - Ator
+      summary: Lista todos os Atores
+      description: Retorna uma lista de todos os atores registrados.
+      responses:
+        '200':
+          description: Operacao bem-sucedida
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Ator'    
+        '404':
+          description: Nao Encontrado
+  /v1/locadora/ator/{id_ator}:
+    get:
+      tags:
+        - Ator
+      summary: Busca um Ator pelo ID
+      description: Retorna um ator pelo seu ID.
+      parameters:
+        - name: id_ator
+          in: path
+          description: ID do ator a ser retornado
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Operacao bem-sucedida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ator'    
+        '400':
+          description: ID fornecido invalido
+        '404':
+          description: Ator nao encontrado
+    put:
+      tags:
+        - Ator
+      summary: Atualiza um Ator existente
+      description: Atualiza um ator existente pelo seu ID.
+      parameters:
+        - name: id_ator
+          in: path
+          description: ID do ator a ser atualizado
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        $ref: '#/components/requestBodies/Ator'
+      responses:
+        '200':
+          description: Operacao bem-sucedida
+        '400':
+          description: ID fornecido invalido ou entrada invalida
+        '404':
+          description: Ator nao encontrado
+    delete:
+      tags:
+        - Ator
+      summary: Exclui um Ator
+      description: Exclui um ator pelo seu ID.
+      parameters:
+        - name: id_ator
+          in: path
+          description: ID do ator a ser excluido
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Operacao bem-sucedida
+        '400':
+          description: ID fornecido invalido
+        '404':
+          description: Ator nao encontrado
+
+  /v1/locadora/filme:
+    post:
+      tags:
+        - Filme
+      summary: Adiciona um novo Filme
+      description: Adiciona um novo filme ao catalogo.
+      requestBody:
+        $ref: '#/components/requestBodies/Filme'
+      responses:
+        '201':
+          description: Filme adicionado com sucesso
+        '400':
+          description: Entrada invalida
+    get:
+      tags:
+        - Filme
+      summary: Lista todos os Filmes
+      description: Retorna uma lista de todos os filmes registrados.
+      responses:
+        '200':
+          description: Operacao bem-sucedida
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Filme'    
+        '404':
+          description: Nao Encontrado
+  /v1/locadora/filme/{id_filme}:
+    get:
+      tags:
+        - Filme
+      summary: Busca um Filme pelo ID
+      description: Retorna um filme pelo seu ID.
+      parameters:
+        - name: id_filme
+          in: path
+          description: ID do filme a ser retornado
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Operacao bem-sucedida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Filme'    
+        '400':
+          description: ID fornecido invalido
+        '404':
+          description: Filme nao encontrado
+    put:
+      tags:
+        - Filme
+      summary: Atualiza um Filme existente
+      description: Atualiza um filme existente pelo seu ID.
+      parameters:
+        - name: id_filme
+          in: path
+          description: ID do filme a ser atualizado
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        $ref: '#/components/requestBodies/Filme'
+      responses:
+        '200':
+          description: Operacao bem-sucedida
+        '400':
+          description: ID fornecido invalido ou entrada invalida
+        '404':
+          description: Filme nao encontrado
+    delete:
+      tags:
+        - Filme
+      summary: Exclui um Filme
+      description: Exclui um filme pelo seu ID.
+      parameters:
+        - name: id_filme
+          in: path
+          description: ID do filme a ser excluido
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Operacao bem-sucedida
+        '400':
+          description: ID fornecido invalido
+        '404':
+          description: Filme nao encontrado
+
+  /v1/locadora/filme_ator:
+    post:
+      tags:
+        - Filme Ator
+      summary: Associa um Ator a um Filme
+      description: Cria um relacionamento entre um filme e um ator.
+      requestBody:
+        $ref: '#/components/requestBodies/FilmeAtor'
+      responses:
+        '201':
+          description: Associacao adicionada com sucesso
+        '400':
+          description: Entrada invalida
+    get:
+      tags:
+        - Filme Ator
+      summary: Lista todas as associacoes de Filme Ator
+      description: Retorna uma lista de todas as associacoes entre filmes e atores.
+      responses:
+        '200':
+          description: Operacao bem-sucedida
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FilmeAtor'    
+        '404':
+          description: Nao Encontrado
+  /v1/locadora/filme_ator/{id_filme_ator}:
+    delete:
+      tags:
+        - Filme Ator
+      summary: Remove uma associacao de Ator a Filme
+      description: Exclui a associacao entre um filme e um ator pelo ID.
+      parameters:
+        - name: id_filme_ator
+          in: path
+          description: ID da associacao Filme Ator a ser excluida
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Operacao bem-sucedida
+        '400':
+          description: ID fornecido invalido
+        '404':
+          description: Associacao nao encontrada
+    put:
+      tags:
+        - Filme Ator
+      summary: Atualiza uma associacao de Ator a Filme
+      description: Atualiza a associacao entre um filme e um ator pelo ID.
+      parameters:
+        - name: id_filme_ator
+          in: path
+          description: ID da associacao Filme Ator a ser atualizada
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        $ref: '#/components/requestBodies/FilmeAtor'
+      responses:
+        '200':
+          description: Operacao bem-sucedida
+        '400':
+          description: ID fornecido invalido ou entrada invalida
+        '404':
+          description: Associacao nao encontrada
+
+  /v1/locadora/filme_genero:
+    post:
+      tags:
+        - Filme Genero
+      summary: Associa um Genero a um Filme
+      description: Cria um relacionamento entre um filme e um genero.
+      requestBody:
+        $ref: '#/components/requestBodies/FilmeGenero'
+      responses:
+        '201':
+          description: Associacao adicionada com sucesso
+        '400':
+          description: Entrada invalida
+    get:
+      tags:
+        - Filme Genero
+      summary: Lista todas as associacoes de Filme Genero
+      description: Retorna uma lista de todas as associacoes entre filmes e generos.
+      responses:
+        '200':
+          description: Operacao bem-sucedida
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FilmeGenero'    
+        '404':
+          description: Nao Encontrado
+  /v1/locadora/filme_genero/{id_filme_genero}:
+    delete:
+      tags:
+        - Filme Genero
+      summary: Remove uma associacao de Genero a Filme
+      description: Exclui a associacao entre um filme e um genero pelo ID.
+      parameters:
+        - name: id_filme_genero
+          in: path
+          description: ID da associacao Filme Genero a ser excluida
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Operacao bem-sucedida
+        '400':
+          description: ID fornecido invalido
+        '404':
+          description: Associacao nao encontrada
+    put:
+      tags:
+        - Filme Genero
+      summary: Atualiza uma associacao de Genero a Filme
+      description: Atualiza a associacao entre um filme e um genero pelo ID.
+      parameters:
+        - name: id_filme_genero
+          in: path
+          description: ID da associacao Filme Genero a ser atualizada
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        $ref: '#/components/requestBodies/FilmeGenero'
+      responses:
+        '200':
+          description: Operacao bem-sucedida
+        '400':
+          description: ID fornecido invalido ou entrada invalida
+        '404':
+          description: Associacao nao encontrada
+
+components:
+  schemas:
+    Nacionalidade:
+      required:
+        - nome
+      type: object
+      properties:
+        id_nacionalidade:
+          type: integer
+          description: ID da Nacionalidade
+        nome:
+          type: string
+          description: Nome da nacionalidade
+    Genero:
+      required:
+        - nome
+      type: object
+      properties:
+        id_genero:
+          type: integer
+          description: ID do Genero
+        nome:
+          type: string
+          description: Nome do genero
+    ClassificacaoEtaria:
+      required:
+        - sigla
+        - descricao
+        - icone
+      type: object
+      properties:
+        id_classificacao_etaria:
+          type: integer
+          description: ID da Classificacao Etaria
+        sigla:
+          type: string
+          description: Sigla da classificacao
+        descricao:
+          type: string
+          description: Descricao da classificacao
+        icone:
+          type: string
+          description: URL do icone representativo
+    Estudio:
+      required:
+        - nome
+      type: object
+      properties:
+        id_estudio:
+          type: integer
+          description: ID do Estudio
+        nome:
+          type: string
+          description: Nome do estudio
+        site:
+          type: string
+          description: Site oficial do estudio
+    Ator:
+      required:
+        - nome
+        - data_nascimento
+        - id_nacionalidade
+      type: object
+      properties:
+        id_ator:
+          type: integer
+          description: ID do Ator
+        nome:
+          type: string
+          description: Nome do ator/atriz
+        nome_artistico:
+          type: string
+          description: Nome artistico do ator/atriz
+        data_nascimento:
+          type: string
+          format: date
+          description: Data de nascimento
+        data_falecimento:
+          type: string
+          format: date
+          description: Data de falecimento (opcional)
+        foto:
+          type: string
+          description: URL da foto do ator
+        biografia:
+          type: string
+          description: Biografia do ator
+        id_nacionalidade:
+          type: integer
+          description: ID da Nacionalidade
+    Filme:
+      required:
+        - nome
+        - data_lancamento
+        - duracao
+        - id_classificacao_etaria
+        - id_estudio
+      type: object
+      properties:
+        id_filme:
+          type: integer
+          description: ID do Filme
+        nome:
+          type: string
+          description: Titulo do filme
+        sinopse:
+          type: string
+          description: Sinopse do filme
+        data_lancamento:
+          type: string
+          format: date
+          description: Data de lancamento
+        data_relancamento:
+          type: string
+          format: date
+          description: Data de relancamento (opcional)
+        duracao:
+          type: string
+          description: Duracao do filme (formato HH:MM:SS)
+        foto_capa:
+          type: string
+          description: URL da foto de capa
+        valor_unitario:
+          type: number
+          format: float
+          description: Valor unitario do aluguel
+        id_classificacao_etaria:
+          type: integer
+          description: ID da Classificacao Etaria
+        id_estudio:
+          type: integer
+          description: ID do Estudio
+    FilmeAtor:
+      required:
+        - filme_id
+        - ator_id
+      type: object
+      properties:
+        id_filme_ator:
+          type: integer
+          description: ID do relacionamento Filme-Ator
+        filme_id:
+          type: integer
+          description: ID do Filme
+        ator_id:
+          type: integer
+          description: ID do Ator
+    FilmeGenero:
+      required:
+        - filme_id
+        - genero_id
+      type: object
+      properties:
+        id_filme_genero:
+          type: integer
+          description: ID do relacionamento Filme-Genero
+        filme_id:
+          type: integer
+          description: ID do Filme
+        genero_id:
+          type: integer
+          description: ID do Genero
+
+  requestBodies:
+    Nacionalidade:
+      description: Objeto Nacionalidade para ser adicionado ou atualizado
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Nacionalidade'
+    Genero:
+      description: Objeto Genero para ser adicionado ou atualizado
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Genero'
+    ClassificacaoEtaria:
+      description: Objeto Classificacao Etaria para ser adicionado ou atualizado
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClassificacaoEtaria'
+    Estudio:
+      description: Objeto Estudio para ser adicionado ou atualizado
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Estudio'
+    Ator:
+      description: Objeto Ator para ser adicionado ou atualizado
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Ator'
+    Filme:
+      description: Objeto Filme para ser adicionado ou atualizado
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Filme'
+    FilmeAtor:
+      description: Objeto de associacao Filme Ator para ser adicionado ou atualizado
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FilmeAtor'
+    FilmeGenero:
+      description: Objeto de associacao Filme Genero para ser adicionado ou atualizado
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FilmeGenero'

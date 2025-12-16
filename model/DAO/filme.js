@@ -145,8 +145,8 @@ const setInsertFilms = async function (filme) {
     try {
         
         // Script SQL
-        let sql = `INSERT INTO tbl_filme (nome, sinopse, data_lancamento, duracao, orcamento, trailer, capa)
-        VALUES ('${filme.nome}', '${filme.sinopse}', '${filme.data_lancamento}', '${filme.duracao}', '${filme.orcamento}', '${filme.trailer}', '${filme.capa}');`
+        let sql = `INSERT INTO tbl_filme (nome, sinopse, data_lancamento, duracao, orcamento, trailer, capa, classificacao_etaria_id)
+        VALUES ('${filme.nome}', '${filme.sinopse}', '${filme.data_lancamento}', '${filme.duracao}', '${filme.orcamento}', '${filme.trailer}', '${filme.capa}', ${filme.classificacao_etaria_id});`
         
         // Por variavel é Unsafe
         // $executeRawUnsafe () -> Permite apenas executar scripsts SQL que não tem retorno de dados (INSERT, UPDATE, DELETE)
@@ -174,7 +174,8 @@ const setUpdateFilms = async function (filme) {
         duracao             =   '${filme.duracao}',
         orcamento           =   '${filme.orcamento}',
         trailer             =   '${filme.trailer}',
-        capa                =   '${filme.capa}'
+        capa                =   '${filme.capa}',
+        classificacao_etaria_id = ${filme.classificacao_etaria_id}
         where filme_id = ${filme.id};`
         
         // Por variavel é Unsafe
